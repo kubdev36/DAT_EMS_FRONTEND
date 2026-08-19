@@ -6,8 +6,14 @@ import { useLanguage } from "../../Lang/LanguageProvider";
 import { useIntl } from "react-intl";
 
 import "./Login.scss";
-import { callApi } from "../../Api/Api";
+// import { callApi } from "../../Api/Api";
 import { isMobile } from "react-device-detect"
+
+const DEMO_ACCOUNT = {
+  username: "demo_user",
+  password: "abc12345",
+  token: "trial-local-token",
+};
 
 export default function Login() {
   const lang = useIntl();
@@ -49,25 +55,36 @@ export default function Login() {
   }, [isForgotPassword]);
 
   const login = async (account, password, save) => {
-    try {
-      const res = await callApi('post', `${process.env.REACT_APP_API}/data/login`, 
-        {
-          account: account,
-          password: password,
-        }
-      );
+    // API login tạm thời comment để dùng tài khoản cứng.
+    // try {
+    //   const res = await callApi("post", `${process.env.REACT_APP_API}/data/login`,
+    //     {
+    //       account: account,
+    //       password: password,
+    //     }
+    //   );
+    //
+    //   if (res.status === true) {
+    //     if (save) {
+    //       localStorage.setItem("token", JSON.stringify(res.token));
+    //     } else {
+    //       sessionStorage.setItem("token", JSON.stringify(res.token));
+    //     };
+    //     return navigate("/projectmanagement");
+    //   }
+    // } catch (error) {
+    //
+    // }
 
-      if (res.status === true) {
-        if (save) {
-          localStorage.setItem("token", JSON.stringify(res.token));
-        } else {
-          sessionStorage.setItem("token", JSON.stringify(res.token));
-        };
-        return navigate("/projectmanagement");
-      }
-    } catch (error) {
+    const isValid =
+      account === DEMO_ACCOUNT.username && password === DEMO_ACCOUNT.password;
 
-    }
+    if (!isValid) return false;
+
+    const storage = save ? localStorage : sessionStorage;
+    storage.setItem("token", JSON.stringify(DEMO_ACCOUNT.token));
+    navigate("/projectmanagement");
+    return true;
   }
 
 
@@ -86,10 +103,12 @@ export default function Login() {
     }
 
     setLoading(true);
-    await login(identifier, password, remember);
+    const isLoggedIn = await login(identifier, password, remember);
     setLoading(false);
 
-    setError(lang.formatMessage({ id: "login_error" }));
+    if (!isLoggedIn) {
+      setError(lang.formatMessage({ id: "login_error" }));
+    }
   };
 
   const handleForgotPassword = () => {
@@ -108,11 +127,7 @@ const handleDemoLogin = () => {
   setError("");
   setLoading(true);
 
-  // Token giả để các phần đang kiểm tra token vẫn hoạt động
-  localStorage.setItem(
-    "token",
-    JSON.stringify("trial-local-token")
-  );
+  localStorage.setItem("token", JSON.stringify(DEMO_ACCOUNT.token));
 
   setLoading(false);
 
@@ -129,22 +144,27 @@ const handleDemoLogin = () => {
       setError(lang.formatMessage({ id: "alarm_email" }));
       return;
     }
-    try {
-      const res = await callApi("post", `${process.env.REACT_APP_API}/data/renderOtp`, {
-        email: email
-      });
-      if (res.status === false) {
-        setError("Không tìm thấy email trong hệ thống");
-        return;
-      } else {
-        setEmail(email);
-        setStep(2);
-        setCountdown(60);
+    // API gửi OTP tạm thời comment để chạy offline.
+    // try {
+    //   const res = await callApi("post", `${process.env.REACT_APP_API}/data/renderOtp`, {
+    //     email: email
+    //   });
+    //   if (res.status === false) {
+    //     setError("Không tìm thấy email trong hệ thống");
+    //     return;
+    //   } else {
+    //     setEmail(email);
+    //     setStep(2);
+    //     setCountdown(60);
+    //
+    //   }
+    // } catch (error) {
+    //   setError(lang.formatMessage({ id: "alarm_email_notfound" }));
+    // }
 
-      }
-    } catch (error) {
-      setError(lang.formatMessage({ id: "alarm_email_notfound" }));
-    }
+    setEmail(email);
+    setStep(2);
+    setCountdown(60);
   }
 
   const handleSubmitOtp = async (e) => {
@@ -158,18 +178,26 @@ const handleDemoLogin = () => {
       return;
     }
     const otpCode = otp.join("");
-    try {
-      const res = await callApi("post", `${process.env.REACT_APP_API}/data/verifyOtp`, {
-        otp: otpCode
-      });
-      if (res.status === false) {
-        setError(lang.formatMessage({ id: "alarm_wrong_otp" }))
-      } else {
-        setStep(3);
-      }
-    } catch (error) {
+    // API xác thực OTP tạm thời comment để chạy offline.
+    // try {
+    //   const res = await callApi("post", `${process.env.REACT_APP_API}/data/verifyOtp`, {
+    //     otp: otpCode
+    //   });
+    //   if (res.status === false) {
+    //     setError(lang.formatMessage({ id: "alarm_wrong_otp" }))
+    //   } else {
+    //     setStep(3);
+    //   }
+    // } catch (error) {
+    //   setError(lang.formatMessage({ id: "alarm_wrong_otp" }))
+    // }
+
+    if (otpCode !== "123456") {
       setError(lang.formatMessage({ id: "alarm_wrong_otp" }))
+      return;
     }
+
+    setStep(3);
   };
 
   const handleSubmitPassword = async (e) => {
@@ -189,21 +217,25 @@ const handleDemoLogin = () => {
     }
 
     if (password === confirmPassword) {
-      try {
-        const res = await callApi("post", `${process.env.REACT_APP_API}/data/changePasswordWithOtp`, {
-          password: password,
-          email: email
-        });
+      // API đổi mật khẩu tạm thời comment để chạy offline.
+      // try {
+      //   const res = await callApi("post", `${process.env.REACT_APP_API}/data/changePasswordWithOtp`, {
+      //     password: password,
+      //     email: email
+      //   });
+      //
+      //   if (res.status === false) {
+      //     setError("Error sys")
+      //   } else {
+      //     setIsForgotPassword(false);
+      //     setStep(1);
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
 
-        if (res.status === false) {
-          setError("Error sys")
-        } else {
-          setIsForgotPassword(false);
-          setStep(1);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      setIsForgotPassword(false);
+      setStep(1);
     } else {
       setError(lang.formatMessage({ id: "alarm_password_not_match" }));
     }
@@ -222,20 +254,21 @@ const handleDemoLogin = () => {
 
   const handleOtpAgain = async () => {
     setCountdown(60);
-    const emailOtp = email
-    try {
-      const res = await callApi("post", `${process.env.REACT_APP_API}/data/renderOtp`, {
-        email: emailOtp
-      });
-      if (res.status === false) {
-        console.log("Error sys")
-      } else {
-        console.log("Otp has sended")
-      }
-    } catch (error) {
-      console.log(error);
-      console.log("Lỗi hệ thống");
-    }
+    // API gửi lại OTP tạm thời comment để chạy offline.
+    // const emailOtp = email
+    // try {
+    //   const res = await callApi("post", `${process.env.REACT_APP_API}/data/renderOtp`, {
+    //     email: emailOtp
+    //   });
+    //   if (res.status === false) {
+    //     console.log("Error sys")
+    //   } else {
+    //     console.log("Otp has sended")
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   console.log("Lỗi hệ thống");
+    // }
   };
 
   const handleOtpKeyDown = (index, e) => {
