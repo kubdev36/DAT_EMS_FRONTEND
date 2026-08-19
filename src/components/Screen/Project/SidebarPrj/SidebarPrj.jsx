@@ -2,43 +2,45 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { isMobile } from "react-device-detect";
-import {
-  LuBell,
-  LuChartNoAxesCombined,
-  LuSettings,
-  LuUserPen,
-  LuUsers,
-} from "react-icons/lu";
-import { GoLaw, GoProjectRoadmap } from "react-icons/go";
-import "./Sidebar.scss";
+import { LuLayoutDashboard, LuSettings } from "react-icons/lu";
+import { MdElectricBolt, MdOutlineCircleNotifications } from "react-icons/md";
+import { GoProjectRoadmap } from "react-icons/go";
+import { IoIosWater } from "react-icons/io";
+import { FaGripfire } from "react-icons/fa";
+import "./SidebarPrj.scss";
 
 const menuGroups = [
   {
-    labelId: "project_management",
-    mobileLabel: "project_management_label",
-    mobileIcon: <GoProjectRoadmap />,
+    labelId: "dashboard_overview",
+    mobileLabel: "dashboard_overview_label",
+    mobileIcon: <LuLayoutDashboard />,
     items: [
       {
-        path: "/projectmanagement",
+        path: "/dashboard",
         icon: <GoProjectRoadmap />,
-        labelId: "project_management",
+        labelId: "dashboard_overview",
       },
     ],
   },
   {
     labelId: "sidebar_group_operation",
     mobileLabel: "sidebar_group_operation_label",
-    mobileIcon: <LuChartNoAxesCombined />,
+    mobileIcon: <MdOutlineCircleNotifications />,
     items: [
       {
-        path: "/alarm",
-        icon: <LuBell />,
-        labelId: "sidebar_item_alarm",
+        path: "/electric",
+        icon: <MdElectricBolt />,
+        labelId: "sidebar_item_electric",
       },
       {
-        path: "/energy-report",
-        icon: <LuChartNoAxesCombined />,
-        labelId: "sidebar_item_energy_report",
+        path: "/water",
+        icon: <IoIosWater />,
+        labelId: "sidebar_item_water",
+      },
+      {
+        path: "/compressed-air",
+        icon: <FaGripfire />,
+        labelId: "sidebar_item_compressed_air",
       },
     ],
   },
@@ -48,19 +50,14 @@ const menuGroups = [
     mobileIcon: <LuSettings />,
     items: [
       {
-        path: "/users",
-        icon: <LuUsers />,
-        labelId: "sidebar_item_user_management",
+        path: "/alarm-management",
+        icon: <MdOutlineCircleNotifications />,
+        labelId: "sidebar_item_alarm_management2",
       },
       {
-        path: "/roles",
-        icon: <GoLaw />,
-        labelId: "sidebar_item_role_management",
-      },
-      {
-        path: "/user-info",
-        icon: <LuUserPen />,
-        labelId: "sidebar_item_user_info",
+        path: "/settings",
+        icon: <LuSettings />,
+        labelId: "sidebar_item_system_settings",
       },
     ],
   },

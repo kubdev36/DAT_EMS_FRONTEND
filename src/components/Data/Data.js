@@ -1,0 +1,42 @@
+export const projects = [
+  {
+    id: "EMS-001",
+    name: "Nhà máy Embody Solar",
+    address: "KCN VSIP II, Bình Dương",
+    location: "Bình Dương",
+    status: "Đang vận hành",
+    createdAt: "12/06/2026",
+  },
+  {
+    id: "EMS-002",
+    name: "DAT Battery Lab",
+    address: "Quận 7, TP. Hồ Chí Minh",
+    location: "TP. Hồ Chí Minh",
+    status: "Đang vận hành",
+    createdAt: "18/06/2026",
+  },
+  {
+    id: "EMS-003",
+    name: "Kho lạnh Mekong",
+    address: "KCN Trà Nóc, Cần Thơ",
+    location: "Cần Thơ",
+    status: "Cảnh báo",
+    createdAt: "25/06/2026",
+  },
+  {
+    id: "EMS-004",
+    name: "Khu văn phòng Lotus",
+    address: "Hải Châu, Đà Nẵng",
+    location: "Đà Nẵng",
+    status: "Cảnh báo",
+    createdAt: "01/07/2026",
+  },
+  {
+    id: "EMS-005",
+    name: "Cụm xưởng Precision",
+    address: "KCN Long Thành, Đồng Nai",
+    location: "Đồng Nai",
+    status: "Đang vận hành",
+    createdAt: "08/07/2026",
+  },
+];

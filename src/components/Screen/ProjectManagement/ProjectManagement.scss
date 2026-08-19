@@ -1,0 +1,224 @@
+.DAT_ProjectManagement {
+  min-height: calc(100vh - var(--header-height) - 48px);
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+
+  &_PageHeader {
+    min-height: 84px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    h1 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 24px;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0;
+    }
+
+    p {
+      margin-top: 4px;
+      color: var(--text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    &_Actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+  }
+
+  &_Search {
+    width: 360px;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--gray-50);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+
+    svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text-body);
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  &_Create {
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--primary);
+    border-radius: 3px;
+    background: var(--primary);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+  }
+
+  &_TableWrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  &_Table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+
+    thead {
+      background: var(--gray-50);
+    }
+
+    th,
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+      font-size: var(--font-size-sm);
+    }
+
+    th {
+      color: var(--text-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    td {
+      color: var(--text-body);
+    }
+
+    tbody tr {
+      transition: background var(--transition-fast);
+
+      &:hover {
+        background: rgba(238, 243, 255, 0.72);
+      }
+    }
+  }
+
+  &_ProjectName {
+    min-width: 220px;
+
+    strong {
+      display: block;
+      color: var(--gray-900);
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.25;
+    }
+
+    small {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-muted);
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  &_CellIcon {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+  }
+
+  &_Status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+
+    &_success {
+      background: var(--success-light);
+      color: var(--success-dark);
+    }
+
+    &_danger {
+      background: var(--danger-light);
+      color: var(--danger-dark);
+    }
+  }
+
+  &_RowActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+
+    button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      background: var(--card-bg);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+
+      &.DAT_ProjectManagement_RowActions_Delete:hover {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+    }
+  }
+
+  &_Empty {
+    padding: 40px 16px;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+}
