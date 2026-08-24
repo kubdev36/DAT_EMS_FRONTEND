@@ -1,7 +1,6 @@
-@use "/src/mixins" as *;
-
 .DAT_SystemSetting {
-  @include flexbox(column);
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   max-width: 1024px;
   width: 100%;
@@ -33,7 +32,8 @@
 
   &_CO2EConvert {
     &_Head {
-      @include flexbox(row);
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
@@ -41,7 +41,8 @@
       padding-bottom: 12px;
 
       &_Left {
-        @include flexbox(column);
+        display: flex;
+        flex-direction: column;
         gap: 2px;
 
         &_Title {
@@ -75,7 +76,8 @@
       padding-top: 4px;
 
       &_Item {
-        @include flexbox(column);
+        display: flex;
+        flex-direction: column;
         border-radius: 12px;
         background: rgba(6, 16, 30, 1);
         border: rgba(22, 37, 64, 1) 1px solid;
@@ -89,7 +91,8 @@
           color: var(--pd-text-300);
         }
         &_InputField {
-          @include flexbox(row);
+          display: flex;
+          flex-direction: row;
           gap: 8px;
           align-items: center;
 
@@ -130,7 +133,8 @@
 
   &_ElectricityPriceSetting {
     &_Head {
-      @include flexbox(row);
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
@@ -138,7 +142,8 @@
       padding-bottom: 12px;
 
       &_Left {
-        @include flexbox(column);
+        display: flex;
+        flex-direction: column;
         gap: 2px;
 
         &_Title {
@@ -166,11 +171,13 @@
     }
 
     &_Body {
-      @include flexbox(column);
+      display: flex;
+      flex-direction: column;
       gap: 12px;
 
       &_Item {
-        @include flexbox(row);
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
         border-radius: 12px;
         background: rgba(6, 16, 30, 1);
@@ -220,7 +227,8 @@
 
           &_InputField {
             &_Row {
-              @include flexbox(row);
+              display: flex;
+              flex-direction: row;
               align-items: center;
               gap: 6px;
 
@@ -260,7 +268,8 @@
           max-width: 520px;
 
           &_Head {
-            @include flexbox(row);
+            display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 6px;
@@ -270,7 +279,8 @@
             }
 
             &_AddTimeSlotBtn {
-              @include flexbox(row);
+              display: flex;
+              flex-direction: row;
               align-items: center;
               border-radius: 8px;
               background: var(--pd-brand-blue-20);
@@ -289,7 +299,8 @@
             gap: 10px;
 
             &_Row {
-              @include flexbox(row);
+              display: flex;
+              flex-direction: row;
               align-items: center;
               justify-content: space-between;
               padding: 0 12px;
@@ -374,7 +385,8 @@
   }
 
   &_ActionRow {
-    @include flexbox(row);
+    display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     padding-top: 8px;
 

@@ -12,7 +12,7 @@ import CompressedAir from "./components/Screen/Project/CompressedAir/CompressedA
 import CompressedAirDetail from "./components/Screen/Project/CompressedAir/CompressedAirDetail/CompressedAirDetail";
 import Dashboard from "./components/Screen/Project/Dashboard/Dashboard";
 import SystemSetting from "./components/Screen/Project/SystemSetting/SystemSetting";
-
+import Alarm_Project from "./components/Screen/Project/Alarm/Alarm";
 const EmptyPage = () => null;
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
           <Route path="/compressed-air" element={<CompressedAir />} />
           <Route path="/compressed-air/:nodeId" element={<CompressedAirDetail />} />
 
-          <Route path="/alarm-management" element={<EmptyPage />} />
+          <Route path="/alarm-management" element={< Alarm_Project/>} />
           <Route path="/settings" element={<SystemSetting />} />
           <Route path="/project/:projectId" element={<EmptyPage />} />
         </Route>

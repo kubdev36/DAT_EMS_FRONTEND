@@ -73,7 +73,6 @@ export default function ProjectManagement() {
                 <td>
                   <div className="project-name">
                     <strong>{project.name}</strong>
-                    <small>{project.id}</small>
                   </div>
                 </td>
 
