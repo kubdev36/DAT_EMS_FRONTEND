@@ -22,6 +22,9 @@ export default function ProjectHeader({ onAlarmClick }) {
   const userRef = useRef(null);
   const lanRef = useRef(null);
   const alarmRef = useRef(null);
+  const [currentDateTime, setCurrentDateTime] = useState(
+    new Date(2026, 7, 24, 14, 56, 50),
+  );
 
   const currentLanguageLabel = locale === "vi" ? "VI" : "ENG";
   const languageOptions = [
@@ -64,6 +67,17 @@ export default function ProjectHeader({ onAlarmClick }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime((prevDateTime) => {
+        return new Date(prevDateTime.getTime() + 1000);
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const handleChangeLanguage = (nextLang) => {
     setLocale(nextLang);
     setShowLanMenu(false);
@@ -377,36 +391,18 @@ export default function ProjectHeader({ onAlarmClick }) {
                 </div>
               )}
             </div>
-            <div className="DAT_ProjectHeader_Right_Dropdown" ref={userRef}>
-              <button
-                type="button"
-                className="DAT_ProjectHeader_Right_User"
-                onClick={() => setOpenMenu(openMenu === "user" ? null : "user")}
-              >
-                <img
-                  src={image ? image : "/img/user.png"}
-                  className="DAT_ProjectHeader_Right_User_Avatar"
-                />
-                <div className="DAT_ProjectHeader_Right_User_Info">
-                  <span className="DAT_ProjectHeader_Right_User_Info_Name">
-                    {name}
-                  </span>
-                  <span className="DAT_ProjectHeader_Right_User_Info_Role">
-                    {roleName}
-                  </span>
-                </div>
-              </button>
-              {openMenu === "user" && (
-                <div className="DAT_ProjectHeader_Right_Dropdown_Menu DAT_ProjectHeader_Right_Dropdown_Menu_User">
-                  <div
-                    className="DAT_ProjectHeader_Right_Dropdown_MenuItem"
-                    onClick={handleLogout}
-                  >
-                    <LuLogOut />
-                    {lang.formatMessage({ id: "common_logout" })}
-                  </div>
-                </div>
-              )}
+            <div className={`DAT_ProjectHeader_Right_TimeCounter`}>
+              {currentDateTime
+                .toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                })
+                .replace(",", "")}
             </div>
           </div>
         </header>
