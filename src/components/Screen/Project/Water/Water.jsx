@@ -1,0 +1,321 @@
+import React, { useState } from "react";
+import {
+  LuChevronDown,
+  LuChevronLeft,
+  LuChevronRight,
+  LuChevronUp,
+  LuDroplet,
+  LuPlus,
+  LuTrash2,
+  LuX,
+} from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import { waterDiagramData } from "../../../Data/Data";
+import "./Water.scss";
+
+function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const hasChildren = node.children && node.children.length > 0;
+
+  return (
+    <div className={`DAT_Water_Branch ${isRoot ? "DAT_Water_Branch_Root" : ""}`}>
+      <div className="DAT_Water_NodeWrapper">
+        {!isRoot && <div className="DAT_Water_ChildLabel">{node.data.title}</div>}
+
+        <div className="DAT_Water_Card" onClick={() => navigate(`/water/${node.id}`)}>
+          {isRoot ? (
+            <div className="DAT_Water_Card_HeaderRoot">
+              <h4>{node.data.title}</h4>
+              <div className="DAT_Water_Card_Actions">
+                <button
+                  type="button"
+                  title="Thêm trạm con"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenModal("add", node.id, node.data.title);
+                  }}
+                >
+                  <LuPlus />
+                </button>
+                <button
+                  type="button"
+                  className="DAT_Water_Card_Actions_Delete"
+                  title="Xóa trạm tổng nước"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenModal("delete", node.id, node.data.title);
+                  }}
+                >
+                  <LuTrash2 />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="DAT_Water_Card_HeaderSub">
+              <div className="DAT_Water_Card_Actions">
+                <button
+                  type="button"
+                  title="Thêm trạm con"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenModal("add", node.id, node.data.title);
+                  }}
+                >
+                  <LuPlus />
+                </button>
+                <button
+                  type="button"
+                  className="DAT_Water_Card_Actions_Delete"
+                  title="Xóa trạm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenModal("delete", node.id, node.data.title);
+                  }}
+                >
+                  <LuTrash2 />
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="DAT_Water_Card_Body">
+            {node.data.metrics.map((m, i) => (
+              <p key={i}>
+                <span>{m.label}</span>
+                <strong>
+                  {m.value} {m.unit}
+                </strong>
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {hasChildren && (
+          <button
+            type="button"
+            className="DAT_Water_Toggler"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? <LuChevronDown /> : <LuChevronUp />}
+          </button>
+        )}
+      </div>
+
+      {hasChildren && isExpanded && (
+        <>
+          <div className="DAT_Water_LineDown" />
+          <div className="DAT_Water_ChildrenWrap">
+            <div className="DAT_Water_ChildrenGrid">
+              {node.children.map((child, idx) => (
+                <div key={child.id || idx} className="DAT_Water_ChildCol">
+                  <div className="DAT_Water_LineUp" />
+                  <TreeNode
+                    node={child}
+                    onOpenModal={onOpenModal}
+                    navigate={navigate}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default function Water() {
+  const navigate = useNavigate();
+  const [treeList, setTreeList] = useState(waterDiagramData || []);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const [modal, setModal] = useState(null);
+  const [inputVal, setInputVal] = useState("");
+
+  const totalPages = treeList.length;
+  const currentTree = treeList[currentPage];
+
+  const closeModal = () => {
+    setModal(null);
+    setInputVal("");
+  };
+
+  const openModal = (type, id = null, title = "") => {
+    setInputVal("");
+    setModal({ type, id, title });
+  };
+
+  const handleAddSubmit = (e) => {
+    e.preventDefault();
+    if (!inputVal.trim()) return;
+
+    const newNode = {
+      id: Date.now(),
+      data: {
+        title: inputVal.trim().toUpperCase(),
+        metrics: [
+          { label: "TỔNG TIÊU THỤ:", value: "0", unit: "m³" },
+          { label: "LƯU LƯỢNG:", value: "0.0", unit: "m³/h" },
+        ],
+      },
+      children: [],
+    };
+
+    if (modal.type === "add-root") {
+      setTreeList((prev) => [...prev, newNode]);
+      setCurrentPage(totalPages);
+    } else {
+      const add = (n) =>
+        n.id === modal.id
+          ? { ...n, children: [...(n.children || []), newNode] }
+          : { ...n, children: n.children?.map(add) || [] };
+
+      setTreeList((prev) => prev.map((tree, i) => (i === currentPage ? add(tree) : tree)));
+    }
+    closeModal();
+  };
+
+  const handleDeleteSubmit = () => {
+    const isRoot = currentTree?.id === modal.id;
+
+    if (isRoot) {
+      setTreeList((prev) => {
+        const next = prev.filter((t) => t.id !== modal.id);
+        setCurrentPage((p) => Math.min(p, Math.max(0, next.length - 1)));
+        return next;
+      });
+    } else {
+      const remove = (n) => ({
+        ...n,
+        children: (n.children || []).filter((c) => c.id !== modal.id).map(remove),
+      });
+      setTreeList((prev) => prev.map((tree, i) => (i === currentPage ? remove(tree) : tree)));
+    }
+    closeModal();
+  };
+
+  return (
+    <div className="DAT_Water">
+      {/* Tag hệ thống nằm ngoài góc trái */}
+      <div className="DAT_Water_SystemTag">
+        <LuDroplet /> <span>HỆ THỐNG NƯỚC</span>
+      </div>
+
+      {/* Nút tạo trạm góc phải */}
+      <div className="DAT_Water_TopBar">
+        <button
+          type="button"
+          className="DAT_Water_AddRootBtn"
+          onClick={() => openModal("add-root", null, "TRẠM TỔNG NƯỚC")}
+        >
+          <LuPlus /> <span>Tạo trạm tổng nước</span>
+        </button>
+      </div>
+
+      {/* Sơ đồ hệ thống nước */}
+      <div className="DAT_Water_CanvasWrap">
+        <div className="DAT_Water_NavSlot">
+          <button
+            type="button"
+            className="DAT_Water_NavBtn"
+            disabled={totalPages === 0}
+            onClick={() => setCurrentPage((p) => (p > 0 ? p - 1 : totalPages - 1))}
+          >
+            <LuChevronLeft />
+          </button>
+        </div>
+
+        <div className="DAT_Water_ScrollContainer">
+          <div className="DAT_Water_MainBoard">
+            <div className="DAT_Water_Canvas">
+              {currentTree && (
+                <TreeNode
+                  key={currentTree.id || currentPage}
+                  node={currentTree}
+                  isRoot
+                  onOpenModal={openModal}
+                  navigate={navigate}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="DAT_Water_NavSlot">
+          <button
+            type="button"
+            className="DAT_Water_NavBtn"
+            disabled={totalPages === 0}
+            onClick={() => setCurrentPage((p) => (p < totalPages - 1 ? p + 1 : 0))}
+          >
+            <LuChevronRight />
+          </button>
+        </div>
+      </div>
+
+      {totalPages > 1 && (
+        <div className="DAT_Water_PageIndicator">
+          {currentPage + 1}/{totalPages}
+        </div>
+      )}
+
+      {/* Modal CRUD */}
+      {modal && (
+        <div className="DAT_Water_ModalOverlay" onClick={closeModal}>
+          <div className="DAT_Water_Modal" onClick={(e) => e.stopPropagation()}>
+            <div className="DAT_Water_Modal_Header">
+              <h3>
+                {modal.type === "delete"
+                  ? "Xác nhận xóa"
+                  : modal.type === "add-root"
+                  ? "Tạo trạm tổng nước mới"
+                  : `Thêm trạm con cho [${modal.title}]`}
+              </h3>
+              <button type="button" onClick={closeModal}>
+                <LuX />
+              </button>
+            </div>
+
+            {modal.type === "delete" ? (
+              <div>
+                <div className="DAT_Water_Modal_Body">
+                  <p>
+                    Bạn có chắc muốn xóa trạm <strong>{modal.title}</strong> và toàn bộ nhánh con?
+                  </p>
+                </div>
+                <div className="DAT_Water_Modal_Footer">
+                  <button type="button" className="DAT_Water_Modal_BtnCancel" onClick={closeModal}>
+                    Hủy
+                  </button>
+                  <button type="button" className="DAT_Water_Modal_BtnDelete" onClick={handleDeleteSubmit}>
+                    Xóa ngay
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleAddSubmit}>
+                <div className="DAT_Water_Modal_Body">
+                  <label>{modal.type === "add-root" ? "Tên trạm tổng mới:" : "Tên trạm con mới:"}</label>
+                  <input
+                    autoFocus
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    placeholder={modal.type === "add-root" ? "Ví dụ: TRẠM TỔNG NƯỚC 2" : "Ví dụ: DEMO 6 BƠM"}
+                  />
+                </div>
+                <div className="DAT_Water_Modal_Footer">
+                  <button type="button" className="DAT_Water_Modal_BtnCancel" onClick={closeModal}>
+                    Hủy
+                  </button>
+                  <button type="submit" className="DAT_Water_Modal_BtnSubmit">
+                    Xác nhận
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
