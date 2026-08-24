@@ -63,54 +63,54 @@ export default function WaterDetail() {
       <div className="DAT_WaterDetail_Header">
         <button
           type="button"
-          className="DAT_WaterDetail_BackBtn"
+          className="DAT_WaterDetail_Header_BackBtn"
           onClick={() => navigate(-1)}
         >
           <LuChevronLeft />
         </button>
-        <h2 className="DAT_WaterDetail_Title">
+        <h2 className="DAT_WaterDetail_Header_Title">
           {detail?.title || `Giám sát chi tiết Nước ${currentNode?.data?.title || ""}`}
         </h2>
       </div>
 
       {/* 3 Stat Cards */}
       <div className="DAT_WaterDetail_StatCards">
-        <div className="DAT_WaterDetail_StatCard">
-          <span className="DAT_WaterDetail_StatCard_Label">Áp suất nước</span>
-          <div className="DAT_WaterDetail_StatCard_ValueGroup">
-            <span className="DAT_WaterDetail_StatCard_Value">{detail?.pressure?.value}</span>
-            <span className="DAT_WaterDetail_StatCard_Unit">{detail?.pressure?.unit}</span>
+        <div className="DAT_WaterDetail_StatCards_Card">
+          <span className="DAT_WaterDetail_StatCards_Card_Label">Áp suất nước</span>
+          <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.pressure?.value}</span>
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.pressure?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCard_Sub">{detail?.pressure?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.pressure?.desc}</span>
         </div>
 
-        <div className="DAT_WaterDetail_StatCard">
-          <span className="DAT_WaterDetail_StatCard_Label">Lưu lượng nước</span>
-          <div className="DAT_WaterDetail_StatCard_ValueGroup">
-            <span className="DAT_WaterDetail_StatCard_Value">{detail?.flowRate?.value}</span>
-            <span className="DAT_WaterDetail_StatCard_Unit">{detail?.flowRate?.unit}</span>
+        <div className="DAT_WaterDetail_StatCards_Card">
+          <span className="DAT_WaterDetail_StatCards_Card_Label">Lưu lượng nước</span>
+          <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.flowRate?.value}</span>
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.flowRate?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCard_Sub">{detail?.flowRate?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.flowRate?.desc}</span>
         </div>
 
-        <div className="DAT_WaterDetail_StatCard">
-          <span className="DAT_WaterDetail_StatCard_Label">Tổng thể tích nước</span>
-          <div className="DAT_WaterDetail_StatCard_ValueGroup">
-            <span className="DAT_WaterDetail_StatCard_Value">{detail?.totalVolume?.value}</span>
-            <span className="DAT_WaterDetail_StatCard_Unit">{detail?.totalVolume?.unit}</span>
+        <div className="DAT_WaterDetail_StatCards_Card">
+          <span className="DAT_WaterDetail_StatCards_Card_Label">Tổng thể tích nước</span>
+          <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.totalVolume?.value}</span>
+            <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.totalVolume?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCard_Sub">{detail?.totalVolume?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.totalVolume?.desc}</span>
         </div>
       </div>
 
       {/* Đồ thị Recharts */}
       <div className="DAT_WaterDetail_ChartCard">
         <div className="DAT_WaterDetail_ChartCard_Header">
-          <h3>Đồ thị lưu lượng nước tức thời</h3>
-          <p>Theo dõi lưu lượng nước tức thời (m³/h)</p>
+          <h3 className="DAT_WaterDetail_ChartCard_Header_Title">Đồ thị lưu lượng nước tức thời</h3>
+          <p className="DAT_WaterDetail_ChartCard_Header_Sub">Theo dõi lưu lượng nước tức thời (m³/h)</p>
         </div>
 
-        <div className="DAT_WaterDetail_ChartWrap">
+        <div className="DAT_WaterDetail_ChartCard_Wrap">
           <ResponsiveContainer width="100%" height={260}>
             <LineChart
               data={chartData}
@@ -118,7 +118,7 @@ export default function WaterDetail() {
             >
               <defs>
                 <filter id="waterLineGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#22d3ee" floodOpacity="0.8" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="rgba(34, 211, 238, 1)" floodOpacity="0.8" />
                 </filter>
               </defs>
 
@@ -132,7 +132,7 @@ export default function WaterDetail() {
                 domain={[0, 60]}
                 ticks={[0, 15, 30, 45, 60]}
                 stroke="rgba(255, 255, 255, 0.2)"
-                tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "monospace" }}
+                tick={{ fill: "rgba(148, 163, 184, 1)", fontSize: 11, fontFamily: "monospace" }}
                 axisLine={{ stroke: "rgba(255, 255, 255, 0.2)" }}
                 tickLine={{ stroke: "rgba(255, 255, 255, 0.2)" }}
                 label={{
@@ -140,7 +140,7 @@ export default function WaterDetail() {
                   position: "insideLeft",
                   angle: -90,
                   offset: 10,
-                  fill: "#94a3b8",
+                  fill: "rgba(148, 163, 184, 1)",
                   fontSize: 11,
                 }}
               />
@@ -148,7 +148,7 @@ export default function WaterDetail() {
               <XAxis
                 dataKey="time"
                 stroke="rgba(255, 255, 255, 0.2)"
-                tick={{ fill: "#94a3b8", fontSize: 11, fontFamily: "monospace" }}
+                tick={{ fill: "rgba(148, 163, 184, 1)", fontSize: 11, fontFamily: "monospace" }}
                 axisLine={{ stroke: "rgba(255, 255, 255, 0.2)" }}
                 tickLine={false}
                 dy={10}
@@ -156,7 +156,7 @@ export default function WaterDetail() {
                   value: "Thời gian",
                   position: "insideBottom",
                   offset: -12,
-                  fill: "#94a3b8",
+                  fill: "rgba(148, 163, 184, 1)",
                   fontSize: 11,
                 }}
               />
@@ -172,18 +172,18 @@ export default function WaterDetail() {
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#22d3ee"
+                stroke="rgba(34, 211, 238, 1)"
                 strokeWidth={3.5}
                 dot={{
                   r: 4.5,
-                  fill: "#22d3ee",
-                  stroke: "#ffffff",
+                  fill: "rgba(34, 211, 238, 1)",
+                  stroke: "rgba(255, 255, 255, 1)",
                   strokeWidth: 2,
                 }}
                 activeDot={{
                   r: 7,
-                  fill: "#ffffff",
-                  stroke: "#22d3ee",
+                  fill: "rgba(255, 255, 255, 1)",
+                  stroke: "rgba(34, 211, 238, 1)",
                   strokeWidth: 3,
                 }}
                 filter="url(#waterLineGlow)"

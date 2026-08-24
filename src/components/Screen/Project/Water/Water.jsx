@@ -19,14 +19,14 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
 
   return (
     <div className={`DAT_Water_Branch ${isRoot ? "DAT_Water_Branch_Root" : ""}`}>
-      <div className="DAT_Water_NodeWrapper">
-        {!isRoot && <div className="DAT_Water_ChildLabel">{node.data.title}</div>}
+      <div className="DAT_Water_Branch_NodeWrapper">
+        {!isRoot && <div className="DAT_Water_Branch_NodeWrapper_ChildLabel">{node.data.title}</div>}
 
-        <div className="DAT_Water_Card" onClick={() => navigate(`/water/${node.id}`)}>
+        <div className="DAT_Water_Branch_NodeWrapper_Card" onClick={() => navigate(`/water/${node.id}`)}>
           {isRoot ? (
-            <div className="DAT_Water_Card_HeaderRoot">
+            <div className="DAT_Water_Branch_NodeWrapper_Card_HeaderRoot">
               <h4>{node.data.title}</h4>
-              <div className="DAT_Water_Card_Actions">
+              <div className="DAT_Water_Branch_NodeWrapper_Card_Actions">
                 <button
                   type="button"
                   title="Thêm trạm con"
@@ -39,7 +39,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 </button>
                 <button
                   type="button"
-                  className="DAT_Water_Card_Actions_Delete"
+                  className="DAT_Water_Branch_NodeWrapper_Card_Actions_Delete"
                   title="Xóa trạm tổng nước"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -51,8 +51,8 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
               </div>
             </div>
           ) : (
-            <div className="DAT_Water_Card_HeaderSub">
-              <div className="DAT_Water_Card_Actions">
+            <div className="DAT_Water_Branch_NodeWrapper_Card_HeaderSub">
+              <div className="DAT_Water_Branch_NodeWrapper_Card_Actions">
                 <button
                   type="button"
                   title="Thêm trạm con"
@@ -65,7 +65,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 </button>
                 <button
                   type="button"
-                  className="DAT_Water_Card_Actions_Delete"
+                  className="DAT_Water_Branch_NodeWrapper_Card_Actions_Delete"
                   title="Xóa trạm"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -78,7 +78,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
             </div>
           )}
 
-          <div className="DAT_Water_Card_Body">
+          <div className="DAT_Water_Branch_NodeWrapper_Card_Body">
             {node.data.metrics.map((m, i) => (
               <p key={i}>
                 <span>{m.label}</span>
@@ -93,7 +93,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
         {hasChildren && (
           <button
             type="button"
-            className="DAT_Water_Toggler"
+            className="DAT_Water_Branch_NodeWrapper_Toggler"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? <LuChevronDown /> : <LuChevronUp />}
@@ -103,12 +103,12 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
 
       {hasChildren && isExpanded && (
         <>
-          <div className="DAT_Water_LineDown" />
-          <div className="DAT_Water_ChildrenWrap">
-            <div className="DAT_Water_ChildrenGrid">
+          <div className="DAT_Water_Branch_LineDown" />
+          <div className="DAT_Water_Branch_ChildrenWrap">
+            <div className="DAT_Water_Branch_ChildrenWrap_Grid">
               {node.children.map((child, idx) => (
-                <div key={child.id || idx} className="DAT_Water_ChildCol">
-                  <div className="DAT_Water_LineUp" />
+                <div key={child.id || idx} className="DAT_Water_Branch_ChildrenWrap_Grid_Col">
+                  <div className="DAT_Water_Branch_ChildrenWrap_Grid_Col_LineUp" />
                   <TreeNode
                     node={child}
                     onOpenModal={onOpenModal}
@@ -205,7 +205,7 @@ export default function Water() {
       <div className="DAT_Water_TopBar">
         <button
           type="button"
-          className="DAT_Water_AddRootBtn"
+          className="DAT_Water_TopBar_AddRootBtn"
           onClick={() => openModal("add-root", null, "TRẠM TỔNG NƯỚC")}
         >
           <LuPlus /> <span>Tạo trạm tổng nước</span>
@@ -214,10 +214,10 @@ export default function Water() {
 
       {/* Sơ đồ hệ thống nước */}
       <div className="DAT_Water_CanvasWrap">
-        <div className="DAT_Water_NavSlot">
+        <div className="DAT_Water_CanvasWrap_NavSlot">
           <button
             type="button"
-            className="DAT_Water_NavBtn"
+            className="DAT_Water_CanvasWrap_NavSlot_NavBtn"
             disabled={totalPages === 0}
             onClick={() => setCurrentPage((p) => (p > 0 ? p - 1 : totalPages - 1))}
           >
@@ -225,9 +225,9 @@ export default function Water() {
           </button>
         </div>
 
-        <div className="DAT_Water_ScrollContainer">
-          <div className="DAT_Water_MainBoard">
-            <div className="DAT_Water_Canvas">
+        <div className="DAT_Water_CanvasWrap_ScrollContainer">
+          <div className="DAT_Water_CanvasWrap_ScrollContainer_MainBoard">
+            <div className="DAT_Water_CanvasWrap_ScrollContainer_MainBoard_Canvas">
               {currentTree && (
                 <TreeNode
                   key={currentTree.id || currentPage}
@@ -241,10 +241,10 @@ export default function Water() {
           </div>
         </div>
 
-        <div className="DAT_Water_NavSlot">
+        <div className="DAT_Water_CanvasWrap_NavSlot">
           <button
             type="button"
-            className="DAT_Water_NavBtn"
+            className="DAT_Water_CanvasWrap_NavSlot_NavBtn"
             disabled={totalPages === 0}
             onClick={() => setCurrentPage((p) => (p < totalPages - 1 ? p + 1 : 0))}
           >
@@ -262,8 +262,8 @@ export default function Water() {
       {/* Modal CRUD */}
       {modal && (
         <div className="DAT_Water_ModalOverlay" onClick={closeModal}>
-          <div className="DAT_Water_Modal" onClick={(e) => e.stopPropagation()}>
-            <div className="DAT_Water_Modal_Header">
+          <div className="DAT_Water_ModalOverlay_Modal" onClick={(e) => e.stopPropagation()}>
+            <div className="DAT_Water_ModalOverlay_Modal_Header">
               <h3>
                 {modal.type === "delete"
                   ? "Xác nhận xóa"
@@ -278,23 +278,23 @@ export default function Water() {
 
             {modal.type === "delete" ? (
               <div>
-                <div className="DAT_Water_Modal_Body">
+                <div className="DAT_Water_ModalOverlay_Modal_Body">
                   <p>
                     Bạn có chắc muốn xóa trạm <strong>{modal.title}</strong> và toàn bộ nhánh con?
                   </p>
                 </div>
-                <div className="DAT_Water_Modal_Footer">
-                  <button type="button" className="DAT_Water_Modal_BtnCancel" onClick={closeModal}>
+                <div className="DAT_Water_ModalOverlay_Modal_Footer">
+                  <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>
                     Hủy
                   </button>
-                  <button type="button" className="DAT_Water_Modal_BtnDelete" onClick={handleDeleteSubmit}>
+                  <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnDelete" onClick={handleDeleteSubmit}>
                     Xóa ngay
                   </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleAddSubmit}>
-                <div className="DAT_Water_Modal_Body">
+                <div className="DAT_Water_ModalOverlay_Modal_Body">
                   <label>{modal.type === "add-root" ? "Tên trạm tổng mới:" : "Tên trạm con mới:"}</label>
                   <input
                     autoFocus
@@ -303,11 +303,11 @@ export default function Water() {
                     placeholder={modal.type === "add-root" ? "Ví dụ: TRẠM TỔNG NƯỚC 2" : "Ví dụ: DEMO 6 BƠM"}
                   />
                 </div>
-                <div className="DAT_Water_Modal_Footer">
-                  <button type="button" className="DAT_Water_Modal_BtnCancel" onClick={closeModal}>
+                <div className="DAT_Water_ModalOverlay_Modal_Footer">
+                  <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>
                     Hủy
                   </button>
-                  <button type="submit" className="DAT_Water_Modal_BtnSubmit">
+                  <button type="submit" className="DAT_Water_ModalOverlay_Modal_Footer_BtnSubmit">
                     Xác nhận
                   </button>
                 </div>

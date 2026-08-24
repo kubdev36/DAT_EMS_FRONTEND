@@ -28,12 +28,12 @@ export default function ElectricDetail() {
       {
         label: "kW",
         data: detail.chart.map((item) => item.kw),
-        borderColor: "#b455ff",
+        borderColor: "rgba(180, 85, 255, 1)",
         borderWidth: 2.5,
-        backgroundColor: "transparent",
+        backgroundColor: "rgba(0, 0, 0, 0)",
         tension: 0.4,
-        pointBackgroundColor: "#b455ff",
-        pointBorderColor: "#ffffff",
+        pointBackgroundColor: "rgba(180, 85, 255, 1)",
+        pointBorderColor: "rgba(255, 255, 255, 1)",
         pointBorderWidth: 1,
         pointRadius: 4,
         pointHoverRadius: 6,
@@ -49,8 +49,8 @@ export default function ElectricDetail() {
       legend: { display: false },
       tooltip: {
         backgroundColor: "rgba(10, 18, 42, 0.9)",
-        titleColor: "#93c5fd",
-        bodyColor: "#fff",
+        titleColor: "rgba(147, 197, 253, 1)",
+        bodyColor: "rgba(255, 255, 255, 1)",
         borderColor: "rgba(0, 130, 202, 0.5)",
         borderWidth: 1,
       },
@@ -60,25 +60,25 @@ export default function ElectricDetail() {
         title: {
           display: true,
           text: "Thời gian",
-          color: "#7d8fa6",
+          color: "rgba(125, 143, 166, 1)",
           font: { size: 11 },
           padding: { top: 8 },
         },
-        ticks: { color: "#7d8fa6", font: { size: 10 } },
+        ticks: { color: "rgba(125, 143, 166, 1)", font: { size: 10 } },
         grid: { display: false },
       },
       y: {
         title: {
           display: true,
           text: "kW",
-          color: "#7d8fa6",
+          color: "rgba(125, 143, 166, 1)",
           font: { size: 11 },
         },
         min: 0,
         max: 80,
         ticks: {
           stepSize: 20,
-          color: "#7d8fa6",
+          color: "rgba(125, 143, 166, 1)",
           font: { size: 10 },
         },
         grid: {
@@ -95,100 +95,100 @@ export default function ElectricDetail() {
       <div className="DAT_ElectricDetail_Header">
         <button
           type="button"
-          className="DAT_WaterDetail_BackBtn"
+          className="DAT_ElectricDetail_Header_BackBtn"
           onClick={() => navigate(-1)}
         >
           <LuChevronLeft />
         </button>
-        <h2>{detail.title}</h2>
+        <h2 className="DAT_ElectricDetail_Header_Title">{detail.title}</h2>
       </div>
 
       {/* 4 Cards Grid */}
       <div className="DAT_ElectricDetail_Grid">
         {/* Card 1: Điện năng tiêu thụ */}
-        <section className="DAT_ElectricDetail_Card">
-          <h3 className="DAT_ElectricDetail_Card_TitleCyan">Điện năng tiêu thụ</h3>
+        <section className="DAT_ElectricDetail_Grid_Card">
+          <h3 className="DAT_ElectricDetail_Grid_Card_TitleCyan">Điện năng tiêu thụ</h3>
 
-          <div className="DAT_ElectricDetail_Energy_Section">
-            <span className="DAT_ElectricDetail_Label">Tổng tích lũy</span>
-            <div className="DAT_ElectricDetail_ValueRow">
-              <strong className="DAT_ElectricDetail_BigNum">{detail.energy.total}</strong>
-              <span className="DAT_ElectricDetail_Unit">kWh</span>
+          <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Tổng tích lũy</span>
+            <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
+              <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_BigNum">{detail.energy.total}</strong>
+              <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
             </div>
           </div>
 
-          <div className="DAT_ElectricDetail_Divider" />
+          <div className="DAT_ElectricDetail_Grid_Card_Divider" />
 
-          <div className="DAT_ElectricDetail_Energy_Section">
-            <span className="DAT_ElectricDetail_Label">Hôm nay</span>
-            <div className="DAT_ElectricDetail_ValueRow">
-              <strong className="DAT_ElectricDetail_MidNum">{detail.energy.today}</strong>
-              <span className="DAT_ElectricDetail_Unit">kWh</span>
+          <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Hôm nay</span>
+            <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
+              <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_MidNum">{detail.energy.today}</strong>
+              <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
             </div>
           </div>
 
-          <div className="DAT_ElectricDetail_Divider" />
+          <div className="DAT_ElectricDetail_Grid_Card_Divider" />
 
-          <div className="DAT_ElectricDetail_Energy_Section">
-            <span className="DAT_ElectricDetail_Label">Tháng này</span>
-            <div className="DAT_ElectricDetail_ValueRow">
-              <strong className="DAT_ElectricDetail_MidNum">{detail.energy.month}</strong>
-              <span className="DAT_ElectricDetail_Unit">kWh</span>
+          <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Tháng này</span>
+            <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
+              <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_MidNum">{detail.energy.month}</strong>
+              <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
             </div>
           </div>
         </section>
 
         {/* Card 2: 3 Khối Công suất */}
-        <div className="DAT_ElectricDetail_PowersCol">
+        <div className="DAT_ElectricDetail_Grid_PowersCol">
           {detail.powers.map((p, idx) => (
-            <section key={idx} className="DAT_ElectricDetail_Card DAT_ElectricDetail_PowerCard">
-              <h3 className="DAT_ElectricDetail_Card_TitleCyan">{p.label}</h3>
-              <div className="DAT_ElectricDetail_ValueRow">
-                <strong className="DAT_ElectricDetail_BigNum">{p.value}</strong>
-                <span className="DAT_ElectricDetail_Unit">{p.unit}</span>
+            <section key={idx} className="DAT_ElectricDetail_Grid_PowersCol_PowerCard">
+              <h3 className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_TitleCyan">{p.label}</h3>
+              <div className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow">
+                <strong className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow_BigNum">{p.value}</strong>
+                <span className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow_Unit">{p.unit}</span>
               </div>
             </section>
           ))}
         </div>
 
         {/* Card 3: ĐIỆN ÁP & DÒNG ĐIỆN 3 PHA */}
-        <section className="DAT_ElectricDetail_Card DAT_ElectricDetail_PhaseCard">
+        <section className="DAT_ElectricDetail_Grid_PhaseCard">
           <h3>ĐIỆN ÁP & DÒNG ĐIỆN 3 PHA</h3>
-          <div className="DAT_ElectricDetail_PhaseColHeader">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_Header">
             <span>Điện áp (V)</span>
             <span>Dòng điện (A)</span>
           </div>
 
-          <div className="DAT_ElectricDetail_PhaseList">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_List">
             {detail.phases.map((phase) => (
-              <div key={phase.phase} className="DAT_ElectricDetail_PhaseItem">
-                <div className="DAT_ElectricDetail_BadgeCol">
-                  <div className={`DAT_ElectricDetail_Badge DAT_ElectricDetail_Badge_${phase.color}`}>
+              <div key={phase.phase} className="DAT_ElectricDetail_Grid_PhaseCard_List_Item">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol">
+                  <div className={`DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol_Badge DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol_Badge_${phase.color}`}>
                     {phase.phase}
                   </div>
                   <small>{phase.subLabel}</small>
                 </div>
 
-                <div className="DAT_ElectricDetail_MetricCol">
-                  <div className="DAT_ElectricDetail_MetricVal">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol">
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Val">
                     <strong>{phase.voltage}</strong>
                     <span>V</span>
                   </div>
-                  <div className={`DAT_ElectricDetail_Bar DAT_ElectricDetail_Bar_${phase.color}`} />
+                  <div className={`DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar_${phase.color}`} />
                 </div>
 
-                <div className="DAT_ElectricDetail_MetricCol">
-                  <div className="DAT_ElectricDetail_MetricVal">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol">
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Val">
                     <strong>{phase.current}</strong>
                     <span>A</span>
                   </div>
-                  <div className="DAT_ElectricDetail_Bar DAT_ElectricDetail_Bar_orange" />
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar_orange" />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="DAT_ElectricDetail_CardLegend">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_Legend">
             <span className="dot dot-purple"></span>
             <label>Điện áp 3 pha</label>
             <span className="dot dot-orange"></span>
@@ -197,43 +197,43 @@ export default function ElectricDetail() {
         </section>
 
         {/* Card 4: CHẤT LƯỢNG ĐIỆN NĂNG */}
-        <section className="DAT_ElectricDetail_Card DAT_ElectricDetail_PhaseCard">
+        <section className="DAT_ElectricDetail_Grid_PhaseCard">
           <h3>CHẤT LƯỢNG ĐIỆN NĂNG</h3>
-          <div className="DAT_ElectricDetail_PhaseColHeader">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_Header">
             <span>THDv (%)</span>
             <span>THDi (%)</span>
           </div>
 
-          <div className="DAT_ElectricDetail_PhaseList">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_List">
             {detail.quality.map((phase) => (
-              <div key={phase.phase} className="DAT_ElectricDetail_PhaseItem">
-                <div className="DAT_ElectricDetail_BadgeCol">
-                  <div className={`DAT_ElectricDetail_Badge DAT_ElectricDetail_Badge_${phase.color}`}>
+              <div key={phase.phase} className="DAT_ElectricDetail_Grid_PhaseCard_List_Item">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol">
+                  <div className={`DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol_Badge DAT_ElectricDetail_Grid_PhaseCard_List_Item_BadgeCol_Badge_${phase.color}`}>
                     {phase.phase}
                   </div>
                   <small>{phase.subLabel}</small>
                 </div>
 
-                <div className="DAT_ElectricDetail_MetricCol">
-                  <div className="DAT_ElectricDetail_MetricVal">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol">
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Val">
                     <strong>{phase.thdv}</strong>
                     <span>%</span>
                   </div>
-                  <div className="DAT_ElectricDetail_Bar DAT_ElectricDetail_Bar_purple" />
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar_purple" />
                 </div>
 
-                <div className="DAT_ElectricDetail_MetricCol">
-                  <div className="DAT_ElectricDetail_MetricVal">
+                <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol">
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Val">
                     <strong>{phase.thdi}</strong>
                     <span>%</span>
                   </div>
-                  <div className="DAT_ElectricDetail_Bar DAT_ElectricDetail_Bar_orange" />
+                  <div className="DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar DAT_ElectricDetail_Grid_PhaseCard_List_Item_MetricCol_Bar_orange" />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="DAT_ElectricDetail_CardLegend">
+          <div className="DAT_ElectricDetail_Grid_PhaseCard_Legend">
             <span className="dot dot-purple"></span>
             <label>THDv</label>
             <span className="dot dot-orange"></span>
@@ -243,10 +243,10 @@ export default function ElectricDetail() {
       </div>
 
       {/* Chart Section */}
-      <section className="DAT_ElectricDetail_Card DAT_ElectricDetail_ChartCard">
-        <h3 className="DAT_ElectricDetail_ChartTitle">Đồ thị công suất tức thời</h3>
-        <p className="DAT_ElectricDetail_ChartSub">Theo dõi công suất tức thời 24h (kW)</p>
-        <div className="DAT_ElectricDetail_ChartWrap">
+      <section className="DAT_ElectricDetail_ChartCard">
+        <h3 className="DAT_ElectricDetail_ChartCard_Title">Đồ thị công suất tức thời</h3>
+        <p className="DAT_ElectricDetail_ChartCard_Sub">Theo dõi công suất tức thời 24h (kW)</p>
+        <div className="DAT_ElectricDetail_ChartCard_Wrap">
           <Line data={chartData} options={chartOptions} />
         </div>
       </section>
