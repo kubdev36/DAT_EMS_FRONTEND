@@ -1,6 +1,7 @@
 import "./Dashboard.scss";
 import DashboardTrendCard from "./DashboardTrendCard";
 import { Tooltip as PrimeTooltip } from "primereact/tooltip";
+// import { Tooltip } from "primereact/tooltip";
 import { useIntl } from "react-intl";
 import {
   FaBolt,
@@ -37,7 +38,9 @@ export default function Dashboard() {
   return (
     <section className="DAT_DashBoard">
       <div className="DAT_DashBoard_TextHeader">
-        {lang.formatMessage({ id: "dashboard_title" })}
+        <div className="DAT_DashBoard_TextHeader_Name">
+          {lang.formatMessage({ id: "dashboard_title" })}
+        </div>
       </div>
 
       <div className="DAT_DashBoard_MetricCard">

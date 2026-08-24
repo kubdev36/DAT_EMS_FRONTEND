@@ -487,14 +487,14 @@ export default function DashboardTrendCard() {
       <div className="DAT_DashBoard_TrendCard_Switch">
         <button
           type="button"
-          className={`DAT_DashBoard_TrendCard_Switch_Item ${
+          className={`DAT_DashBoard_TrendCard_Switch_Item DAT_DashBoard_TrendCard_Switch_Item_Electric ${
             trendType === "electric"
               ? "DAT_DashBoard_TrendCard_Switch_Item_Active"
               : ""
           }`}
           onClick={() => setTrendType("electric")}
         >
-          <FaBolt className="DAT_DashBoard_MetricCard_ElectricCard_Title_IconBox_Icon" />
+          <FaBolt />
           {lang.formatMessage({
             id: "dashboard_trend_electric",
           })}
@@ -502,14 +502,14 @@ export default function DashboardTrendCard() {
 
         <button
           type="button"
-          className={`DAT_DashBoard_TrendCard_Switch_Item ${
+          className={`DAT_DashBoard_TrendCard_Switch_Item DAT_DashBoard_TrendCard_Switch_Item_Water ${
             trendType === "water"
               ? "DAT_DashBoard_TrendCard_Switch_Item_Active"
               : ""
           }`}
           onClick={() => setTrendType("water")}
         >
-          <FaDroplet className="DAT_DashBoard_MetricCard_WaterCard_Title_IconBox_Icon" />
+          <FaDroplet />
           {lang.formatMessage({
             id: "dashboard_trend_water",
           })}
@@ -517,14 +517,14 @@ export default function DashboardTrendCard() {
 
         <button
           type="button"
-          className={`DAT_DashBoard_TrendCard_Switch_Item ${
+          className={`DAT_DashBoard_TrendCard_Switch_Item DAT_DashBoard_TrendCard_Switch_Item_Gas ${
             trendType === "gas"
               ? "DAT_DashBoard_TrendCard_Switch_Item_Active"
               : ""
           }`}
           onClick={() => setTrendType("gas")}
         >
-          <FaFireFlameCurved className="DAT_DashBoard_MetricCard_GasCard_Title_IconBox_Icon" />
+          <FaFireFlameCurved />
           {lang.formatMessage({
             id: "dashboard_trend_gas",
           })}

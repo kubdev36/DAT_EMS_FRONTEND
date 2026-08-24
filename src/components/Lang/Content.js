@@ -208,15 +208,35 @@ const enMessages = {
   system_setting_electricity_price_description:
     "Enter electricity prices (VND/kWh) and set corresponding time bands",
   system_setting_electricity_price_add_tier: "Add Tariff Tier",
+  system_setting_electricity_price_add_tier_success:
+    "Tariff tier added successfully!",
+  system_setting_electricity_price_add_tier_failed:
+    "Failed to add tariff tier!",
   system_setting_electricity_price_tier_title: "Tier Name",
   system_setting_electricity_price_tier_price: "Unit Price (VND/kWh)",
   system_setting_electricity_price_tier_time: "Applied Time Window",
   system_setting_electricity_price_tier_time_add: "Add Time Slot",
+  system_setting_electricity_price_tier_time_add_success:
+    "Time slot added successfully!",
+  system_setting_electricity_price_tier_time_add_failed:
+    "Failed to add time slot!",
   system_setting_electricity_price_tier_time_delete: "Delete",
+  system_setting_electricity_price_tier_time_delete_confirm:
+    "Are you sure you want to delete this time slot?",
+  system_setting_electricity_price_tier_time_delete_confirm_alert_success:
+    "Time slot deleted successfully!",
+  system_setting_electricity_price_tier_time_delete_confirm_alert_failed:
+    "Failed to delete time slot!",
   system_setting_electricity_price_tier_save: "Save Configuration",
   system_setting_electricity_price_tier_save_success:
     "System settings saved successfully! Emission & cost data auto-updated.",
   system_setting_electricity_price_tier_delete: "Delete this tier",
+  system_setting_electricity_price_tier_delete_confirm:
+    "Are you sure you want to delete this tariff tier?",
+  system_setting_electricity_price_tier_delete_confirm_alert_success:
+    "Tariff tier deleted successfully!",
+  system_setting_electricity_price_tier_delete_confirm_alert_failed:
+    "Failed to delete tariff tier!",
 };
 
 const viMessages = {
@@ -429,15 +449,38 @@ const viMessages = {
   system_setting_electricity_price_description:
     "Nhập đơn giá điện (VNĐ/kWh) và thiết lập trực tiếp các khung giờ áp dụng tương ứng",
   system_setting_electricity_price_add_tier: "Thêm bậc giá",
+  system_setting_electricity_price_add_tier_success:
+    "Bậc giá đã được thêm thành công!",
+  system_setting_electricity_price_add_tier_failed: "Thêm bậc giá thất bại!",
   system_setting_electricity_price_tier_title: "Tên bậc giá",
   system_setting_electricity_price_tier_price: "Đơn giá (VNĐ/kWh)",
   system_setting_electricity_price_tier_time: "Khung giờ áp dụng",
   system_setting_electricity_price_tier_time_add: "Thêm khung giờ",
+  system_setting_electricity_price_tier_time_add_success:
+    "Thêm khung giờ thành công!",
+  system_setting_electricity_price_tier_time_add_failed:
+    "Thêm khung giờ thất bại!",
+  system_setting_electricity_price_tier_time_add_success:
+    "Khung giờ đã được thêm thành công!",
+  system_setting_electricity_price_tier_time_add_failed:
+    "Thêm khung giờ thất bại!",
   system_setting_electricity_price_tier_time_delete: "Xóa",
+  system_setting_electricity_price_tier_time_delete_confirm:
+    "Bạn có chắc chắn muốn xóa khung giờ này không?",
+  system_setting_electricity_price_tier_time_delete_confirm_alert_success:
+    "Đã xóa khung giờ thành công!",
+  system_setting_electricity_price_tier_time_delete_confirm_alert_failed:
+    "Đã xóa khung giờ thất bại!",
   system_setting_electricity_price_tier_save: "Lưu thông số cài đặt",
   system_setting_electricity_price_tier_save_success:
     "Đã lưu thông số cài đặt hệ thống thành công! Dữ liệu tính toán phát thải & chi phí đa tự động cập nhật.",
   system_setting_electricity_price_tier_delete: "Xóa bậc giá này",
+  system_setting_electricity_price_tier_delete_confirm:
+    "Bạn có chắc chắn muốn xóa bậc giá này không?",
+  system_setting_electricity_price_tier_delete_confirm_alert_success:
+    "Đã xóa bậc giá thành công!",
+  system_setting_electricity_price_tier_delete_confirm_alert_failed:
+    "Đã xóa bậc giá thất bại!",
 };
 
 export const messages = {

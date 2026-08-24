@@ -9,7 +9,7 @@
   padding-bottom: 24px;
 
   &_Title {
-    font-size: 16px;
+    font-size: 36px;
     font-weight: bold;
     padding-bottom: 4px;
   }
@@ -29,6 +29,161 @@
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -4px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease-in-out;
+  }
+
+  &_Toast {
+    .p-toast-message {
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 16px;
+      background: #1e1e2f;
+      color: var(--pd-text-300, #adb5bd);
+      margin-bottom: 12px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Cấu trúc bên trong của Toast message */
+      .p-toast-message-content {
+        display: flex;
+        align-items: center; // Canh giữa icon và nội dung theo chiều dọc
+        gap: 12px; // Tách khoảng cách giữa icon và phần nội dung text
+
+        /* Icon lớn hơn và canh giữa */
+        .p-toast-message-icon {
+          font-size: 1.5rem; // Làm icon to lên
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* Phần chứa text (Title + Detail) */
+        .p-toast-message-text {
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          /* Title: to lên, semibold, màu --pd-text-100 */
+          .p-toast-summary {
+            font-size: 1rem;
+            font-weight: 600; // semibold
+            color: var(--pd-text-100, #ffffff);
+            line-height: 1.4;
+          }
+
+          /* Nội dung chi tiết: nhỏ lại, màu --pd-text-300 */
+          .p-toast-detail {
+            font-size: 0.875rem;
+            color: var(--pd-text-300, #adb5bd);
+            line-height: 1.4;
+          }
+        }
+      }
+
+      /* Nút đóng (X) */
+      .p-toast-icon-close {
+        color: var(--pd-text-300, #adb5bd);
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        &:hover {
+          color: var(--pd-text-100, #ffffff);
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      /* --- PHÂN LOẠI MÀU SẮC THEO SEVERITY --- */
+      &.p-toast-message-success {
+        background: #1a2e26;
+        border-color: #2b5a42;
+        .p-toast-message-icon {
+          color: #22c55e; // Xanh lá sáng
+        }
+      }
+
+      &.p-toast-message-error {
+        background: #361b1b;
+        border-color: #632c2c;
+        .p-toast-message-icon {
+          color: #ef4444; // Đỏ sáng
+        }
+      }
+
+      &.p-toast-message-warn {
+        background: #362d1a;
+        border-color: #635029;
+        .p-toast-message-icon {
+          color: #f59e0b; // Vàng/Cam sáng
+        }
+      }
+
+      &.p-toast-message-info {
+        background: #1b263b;
+        border-color: #2d436e;
+        .p-toast-message-icon {
+          color: #38bdf8; // Xanh dương sáng
+        }
+      }
+    }
+  }
+
+  &_ConfirmDialog {
+    @include flexbox(column);
+    gap: 20px;
+    width: 20%;
+    min-width: 300px;
+    background-color: var(--pd-bg-850);
+    padding: 20px;
+    border: var(--pd-bg-650) 1px solid;
+    border-radius: 12px;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    color: var(--pd-text-100);
+
+    .p-dialog-header {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--pd-text-100);
+
+      &-icon {
+        color: var(--pd-text-100);
+      }
+    }
+
+    .p-dialog-footer {
+      @include flexbox(row);
+      justify-content: flex-end;
+      gap: 12px;
+
+      .p-confirm-dialog-reject {
+        padding: 4px 12px;
+        color: var(--pd-text-100);
+        background-color: transparent;
+        border: 1px solid var(--pd-text-500);
+        border-radius: 4px;
+
+        &:hover {
+          background-color: var(--pd-bg-650);
+        }
+      }
+
+      .p-confirm-dialog-accept {
+        padding: 4px 12px;
+        color: var(--pd-text-white);
+        background-color: var(--pd-rose-600);
+        border: none;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: var(--pd-rose-500);
+        }
+      }
+    }
   }
 
   &_CO2EConvert {

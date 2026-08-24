@@ -5,6 +5,9 @@ import { IoMdClose } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa6";
 import { createRoot } from "react-dom/client";
+import { Toast } from "primereact/toast";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { Button } from "primereact/button";
 
 const emptyElectricityPriceTiers = {
   id: null,
@@ -25,6 +28,16 @@ const SystemSetting = () => {
     water: 0.35,
     air: 2.1,
   });
+  const toastRef = useState(null);
+  const [tierDeleteConfirmDialogVisible, setTierDeleteConfirmDialogVisible] =
+    useState(false);
+  const [currentTierIndexToDelete, setCurrentTierIndexToDelete] =
+    useState(null);
+  const [currentTimeSlotToDelete, setCurrentTimeSlotToDelete] = useState(null);
+  const [
+    timeSlotDeleteConfirmDialogVisible,
+    setTimeSlotDeleteConfirmDialogVisible,
+  ] = useState(false);
 
   const [electricityPriceTiers, setElectricityPriceTiers] = useState([
     {
@@ -75,25 +88,123 @@ const SystemSetting = () => {
   ]);
 
   const mockSubmit = (reactNode) => {
-    const titleElement = document.querySelector(".DAT_SystemSetting_Title");
-    if (!titleElement) return;
+    // const titleElement = document.querySelector(".DAT_SystemSetting_Title");
+    // if (!titleElement) return;
 
-    const alertDiv = document.createElement("div");
-    alertDiv.className = "DAT_SystemSetting_Messages";
+    // const alertDiv = document.createElement("div");
+    // alertDiv.className = "DAT_SystemSetting_Messages";
 
-    titleElement.parentNode.insertBefore(alertDiv, titleElement.nextSibling);
+    // titleElement.parentNode.insertBefore(alertDiv, titleElement.nextSibling);
 
-    const root = createRoot(alertDiv);
-    root.render(reactNode);
+    // const root = createRoot(alertDiv);
+    // root.render(reactNode);
 
-    setTimeout(() => {
-      root.unmount();
-      alertDiv.remove();
-    }, 3000);
+    // setTimeout(() => {
+    //   root.unmount();
+    //   alertDiv.remove();
+    // }, 3000);
+    toastRef.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: lang.formatMessage({
+        id: "system_setting_electricity_price_tier_save_success",
+      }),
+    });
+  };
+
+  const handleDeleteTier = () => {
+    setElectricityPriceTiers((prevTiers) => {
+      return prevTiers.filter((_, i) => i !== currentTierIndexToDelete);
+    });
+    toastRef.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: lang.formatMessage({
+        id: "system_setting_electricity_price_tier_delete_confirm_alert_success",
+      }),
+    });
+    setTierDeleteConfirmDialogVisible(false);
+  };
+
+  const handleDeleteTimeSlot = () => {
+    if (!currentTimeSlotToDelete) return;
+
+    const targetTierIndex = currentTimeSlotToDelete.tierIndex;
+    const targetSlotIndex = currentTimeSlotToDelete.slotIndex;
+
+    setElectricityPriceTiers((prevTiers) => {
+      return prevTiers.map((tier, i) => {
+        if (i === targetTierIndex) {
+          return {
+            ...tier,
+            timeSlots: tier.timeSlots.filter(
+              (_, index) => index !== targetSlotIndex,
+            ),
+          };
+        }
+        return tier;
+      });
+    });
+
+    toastRef.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: lang.formatMessage({
+        id: "system_setting_electricity_price_tier_time_delete_confirm_alert_success",
+      }),
+    });
+
+    setTimeSlotDeleteConfirmDialogVisible(false);
+    setCurrentTimeSlotToDelete(null);
   };
 
   return (
     <div className="DAT_SystemSetting">
+      <Toast
+        ref={toastRef}
+        position="top-right"
+        className={`DAT_SystemSetting_Toast`}
+      />
+      <ConfirmDialog
+        group="declarative"
+        visible={tierDeleteConfirmDialogVisible}
+        onHide={() => {
+          setCurrentTierIndexToDelete(null);
+          setTierDeleteConfirmDialogVisible(false);
+        }}
+        message={lang.formatMessage({
+          id: "system_setting_electricity_price_tier_delete_confirm",
+        })}
+        header="Confirmation"
+        icon="pi pi-exclamation-triangle"
+        accept={handleDeleteTier}
+        reject={() => {
+          setCurrentTierIndexToDelete(null);
+          setTierDeleteConfirmDialogVisible(false);
+        }}
+        className={`DAT_SystemSetting_ConfirmDialog`}
+      />
+
+      <ConfirmDialog
+        group="declarative"
+        visible={timeSlotDeleteConfirmDialogVisible}
+        onHide={() => {
+          setCurrentTimeSlotToDelete(null);
+          setTimeSlotDeleteConfirmDialogVisible(false);
+        }}
+        message={lang.formatMessage({
+          id: "system_setting_electricity_price_tier_time_delete_confirm",
+        })}
+        header="Confirmation"
+        icon="pi pi-exclamation-triangle"
+        accept={handleDeleteTimeSlot}
+        reject={() => {
+          setCurrentTimeSlotToDelete(null);
+          setTimeSlotDeleteConfirmDialogVisible(false);
+        }}
+        className={`DAT_SystemSetting_ConfirmDialog`}
+      />
+
       <div className="DAT_SystemSetting_Title">
         {lang.formatMessage({ id: "system_setting_title" })}
       </div>
@@ -243,6 +354,13 @@ const SystemSetting = () => {
                   timeSlots: [{ startTime: "00:00", endTime: "00:00" }],
                 },
               ]);
+              toastRef.current.show({
+                severity: "success",
+                summary: "Success",
+                detail: lang.formatMessage({
+                  id: "system_setting_electricity_price_add_tier_success",
+                }),
+              });
             }}
           >
             {lang.formatMessage({
@@ -349,6 +467,13 @@ const SystemSetting = () => {
                           return tier;
                         });
                       });
+                      toastRef.current.show({
+                        severity: "success",
+                        summary: "Success",
+                        detail: lang.formatMessage({
+                          id: "system_setting_electricity_price_tier_time_add_success",
+                        }),
+                      });
                     }}
                   >
                     <FiPlus />
@@ -362,10 +487,10 @@ const SystemSetting = () => {
                 >
                   {tier.timeSlots.map((slot, slotIndex) => (
                     <div
+                      key={`${slot.startTime}-${slot.endTime}-${slotIndex}`}
                       className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_TimeCol_Body_Row`}
                     >
                       <input
-                        key={slotIndex}
                         type="text"
                         value={slot.startTime}
                         onChange={(e) => {
@@ -405,22 +530,12 @@ const SystemSetting = () => {
                       <button
                         type="button"
                         onClick={(e) => {
-                          e.stopPropagation(); // Chặn nổi bọt sự kiện
-                          setElectricityPriceTiers((prevTiers) => {
-                            return prevTiers.map((tier, i) => {
-                              // Tìm đúng tier chứa timeSlot cần xóa dựa vào index của tier
-                              if (i === index) {
-                                return {
-                                  ...tier,
-                                  // Dùng filter để tạo mảng timeSlots mới, loại bỏ slot tại vị trí slotIndex
-                                  timeSlots: tier.timeSlots.filter(
-                                    (_, sIndex) => sIndex !== slotIndex,
-                                  ),
-                                };
-                              }
-                              return tier;
-                            });
+                          e.stopPropagation();
+                          setCurrentTimeSlotToDelete({
+                            tierIndex: index,
+                            slotIndex,
                           });
+                          setTimeSlotDeleteConfirmDialogVisible(true);
                         }}
                         title={lang.formatMessage({
                           id: "system_setting_electricity_price_tier_time_delete",
@@ -440,14 +555,12 @@ const SystemSetting = () => {
                   className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_Title`}
                 ></div>
                 <button
-                  type="button" // Thêm type="button" để tránh button bị submit form nhầm
+                  type="button"
                   className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_ActionCol_DeleteBtn`}
                   onClick={(e) => {
-                    e.stopPropagation(); // Chặn nổi bọt sự kiện click lan ra thẻ cha
-
-                    setElectricityPriceTiers((prevTiers) => {
-                      return prevTiers.filter((_, i) => i !== index);
-                    });
+                    e.stopPropagation();
+                    setCurrentTierIndexToDelete(index);
+                    setTierDeleteConfirmDialogVisible(true);
                   }}
                   title={lang.formatMessage({
                     id: "system_setting_electricity_price_tier_delete",
@@ -464,18 +577,7 @@ const SystemSetting = () => {
         <button
           className={`DAT_SystemSetting_ActionRow_SaveBtn`}
           onClick={() => {
-            mockSubmit(
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <FaCheck />
-                <span>
-                  {lang.formatMessage({
-                    id: "system_setting_electricity_price_tier_save_success",
-                  })}
-                </span>
-              </div>,
-            );
+            mockSubmit();
           }}
         >
           {lang.formatMessage({
