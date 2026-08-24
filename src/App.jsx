@@ -1,33 +1,51 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import MainLayout from "./components/Layout/MainLayout/MainLayout";
 import ProjectLayout from "./components/Layout/ProjectLayout/ProjectLayout";
 import Login from "./components/Screen/Login/Login";
 import Alarm from "./components/Screen/Alarm/Alarm";
-import ProjectBlank from "./components/Screen/Project/ProjectBlank";
+import Electric from "./components/Screen/Project/Electric/Electric";
+import ElectricDetail from "./components/Screen/Project/Electric/ElectricDetail/ElectricDetail";
 import ProjectManagement from "./components/Screen/ProjectManagement/ProjectManagement";
-import SystemSetting from "./components/Screen/Project/SystemSetting/SystemSetting";
-import MainLayout from "./components/Layout/MainLayout/MainLayout";
+import Water from "./components/Screen/Project/Water/Water";
+import WaterDetail from "./components/Screen/Project/Water/WaterDetail/WaterDetail";
+import CompressedAir from "./components/Screen/Project/CompressedAir/CompressedAir";
+import CompressedAirDetail from "./components/Screen/Project/CompressedAir/CompressedAirDetail/CompressedAirDetail";
 import Dashboard from "./components/Screen/Project/Dashboard/Dashboard";
+import SystemSetting from "./components/Screen/Project/SystemSetting/SystemSetting";
+
+const EmptyPage = () => null;
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+
         <Route element={<MainLayout />}>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/alarm" element={<Alarm />} />
           <Route path="/projectmanagement" element={<ProjectManagement />} />
+          <Route path="/energy-report" element={<EmptyPage />} />
+          <Route path="/users" element={<EmptyPage />} />
+          <Route path="/roles" element={<EmptyPage />} />
+          <Route path="/user-info" element={<EmptyPage />} />
         </Route>
+
         <Route element={<ProjectLayout />}>
-          <Route path="/project/:id" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/electric" element={<ProjectBlank />} />
-          <Route path="/water" element={<ProjectBlank />} />
-          <Route path="/compressed-air" element={<ProjectBlank />} />
-          <Route path="/alarm-management" element={<ProjectBlank />} />
+          <Route path="/electric" element={<Electric />} />
+          <Route path="/electric/:nodeId" element={<ElectricDetail />} />
+          <Route path="/water" element={<Water />} />
+          <Route path="/water/:nodeId" element={<WaterDetail />} />
+          <Route path="/compressed-air" element={<CompressedAir />} />
+          <Route path="/compressed-air/:nodeId" element={<CompressedAirDetail />} />
+
+          <Route path="/alarm-management" element={<EmptyPage />} />
           <Route path="/settings" element={<SystemSetting />} />
-          <Route path="/project/:projectId" element={<ProjectBlank />} />
+          <Route path="/project/:projectId" element={<EmptyPage />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
