@@ -13,8 +13,7 @@ const enMessages = {
   version: "Version",
   alarm_username: "Please enter username.",
   alarm_password: "Please enter password.",
-  alarm_forgot:
-    "Please contact the administrator to have your password reset.",
+  alarm_forgot: "Please contact the administrator to have your password reset.",
   login_error: "Invalid username or password.",
 
   reset_password: "Reset password",
@@ -110,7 +109,114 @@ const enMessages = {
   project_open: "Open project",
   project_options: "Options",
   project_delete: "Delete project",
-  project_empty: "No matching projects found."
+  project_empty: "No matching projects found.",
+
+  // =========================
+  // PROJECT DETAIL DASHBOARD
+  // =========================
+  dashboard_title: "Dashboard",
+
+  dashboard_electric_title: "ELECTRICITY ENERGY",
+  dashboard_water_title: "WATER SYSTEM",
+  dashboard_gas_title: "GAS SYSTEM",
+  dashboard_co2_title: "TOTAL CO₂E",
+
+  dashboard_power: "POWER",
+  dashboard_consumption: "CONSUMPTION",
+  dashboard_flow_rate: "FLOW RATE",
+  dashboard_volume: "VOLUME",
+
+  dashboard_co2_formula_title: "CO₂E EMISSION CALCULATION FORMULA",
+
+  dashboard_co2_electric_title: "1. GRID ELECTRICITY CALCULATION",
+  dashboard_co2_electric_formula:
+    "CO₂e emissions from grid electricity (tCO₂e) = [Total electricity consumption (MWh) × Grid emission factor (kg CO₂/MWh)] / 1000",
+
+  dashboard_co2_water_title: "2. WATER CONSUMPTION CALCULATION",
+  dashboard_co2_water_formula:
+    "CO₂e emissions from water (tCO₂e) = [Water consumption (m³) × Water emission factor (kg CO₂e/m³)] / 1000",
+
+  dashboard_co2_gas_title: "3. GAS (CNG/GAS) CALCULATION",
+  dashboard_co2_gas_formula:
+    "Gas CO₂e emissions (t) = (CO₂ emissions × 1) + (CH₄ emissions × 29.8) + (N₂O emissions × 273)",
+
+  dashboard_co2_total_title: "4. NET EMISSIONS CALCULATION",
+  dashboard_co2_total_formula:
+    "Net emissions (tCO₂e) = (Grid electricity emissions + Water emissions + Gas emissions) - Total emission reductions (Solar + BESS)",
+
+  dashboard_co2_note:
+    "*Note: The grid emission factor is periodically published annually by the Ministry of Natural Resources and Environment.",
+
+  dashboard_trend_instant: "Instantaneous Trend",
+  dashboard_trend_accumulated: "Cumulative Trend",
+  dashboard_trend_time: "Time",
+  dashboard_trend_date: "Date",
+
+  dashboard_trend_increase: "▲ Increase {percent}% vs yesterday",
+  dashboard_trend_decrease: "▼ Decrease {percent}% vs yesterday",
+
+  dashboard_trend_electric: "Electricity",
+  dashboard_trend_water: "Water",
+  dashboard_trend_gas: "Compressed air",
+
+  // =========================
+  // DASHBOARD - ENERGY MIX
+  // =========================
+  dashboard_energy_mix_title: "Today's Energy Mix",
+  dashboard_energy_solar: "Solar",
+  dashboard_energy_grid: "Grid",
+  dashboard_bess_charge: "BESS Charge",
+  dashboard_bess_discharge: "BESS Discharge",
+  // =========================
+  // DASHBOARD - LOAD
+  // =========================
+  dashboard_load_breakdown_title: "Load Breakdown by Type",
+  dashboard_load_air_conditioner: "Air Conditioner",
+  dashboard_load_lighting: "Lighting",
+  dashboard_load_water_pump: "Water Pump",
+  dashboard_load_other_devices: "Other Devices",
+  // =========================
+  // DASHBOARD - TIME BAND
+  // =========================
+  dashboard_consumption_time_band_title: "Consumption by Time Band",
+  dashboard_peak_hours: "Peak Hours",
+  dashboard_normal_hours: "Normal Hours",
+  // =========================
+  // DASHBOARD - ECONOMIC
+  // =========================
+  dashboard_economic_benefits_costs: "ECONOMIC BENEFITS & COSTS",
+  dashboard_solar_economic_benefit: "SOLAR ECONOMIC BENEFIT",
+  dashboard_solar_savings_estimate: "Estimated Solar Savings",
+  dashboard_total_load_cost_today: "Total Load Cost Today",
+  dashboard_grid_electricity_cost: "Grid Electricity Cost",
+  dashboard_million_vnd: "Million VND",
+
+  // =========================
+  // SYSTEM SETTING
+  // =========================
+  system_setting_title: "Settings",
+  system_setting_co2e_convert_title: "CO₂E Emission Conversion Factors",
+  system_setting_co2e_convert_description:
+    "Configure greenhouse gas (CO₂e) emission factors for each energy source",
+  system_setting_co2e_convert_factors: "Emission Factors",
+  system_setting_co2e_convert_electricity: "Electricity",
+  system_setting_co2e_convert_water: "Water",
+  system_setting_co2e_convert_air: "Air",
+
+  system_setting_electricity_price_title:
+    "Electricity Tariff & Time Slot Settings",
+  system_setting_electricity_price_description:
+    "Enter electricity prices (VND/kWh) and set corresponding time bands",
+  system_setting_electricity_price_add_tier: "Add Tariff Tier",
+  system_setting_electricity_price_tier_title: "Tier Name",
+  system_setting_electricity_price_tier_price: "Unit Price (VND/kWh)",
+  system_setting_electricity_price_tier_time: "Applied Time Window",
+  system_setting_electricity_price_tier_time_add: "Add Time Slot",
+  system_setting_electricity_price_tier_time_delete: "Delete",
+  system_setting_electricity_price_tier_save: "Save Configuration",
+  system_setting_electricity_price_tier_save_success:
+    "System settings saved successfully! Emission & cost data auto-updated.",
+  system_setting_electricity_price_tier_delete: "Delete this tier",
 };
 
 const viMessages = {
@@ -128,8 +234,7 @@ const viMessages = {
   version: "Phiên bản",
   alarm_username: "Vui lòng nhập tên tài khoản.",
   alarm_password: "Vui lòng nhập mật khẩu.",
-  alarm_forgot:
-    "Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.",
+  alarm_forgot: "Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.",
   login_error: "Tên tài khoản hoặc mật khẩu sai.",
 
   reset_password: "Đặt lại mật khẩu",
@@ -225,10 +330,117 @@ const viMessages = {
   project_open: "Mở dự án",
   project_options: "Tùy chọn",
   project_delete: "Xóa dự án",
-  project_empty: "Không tìm thấy dự án phù hợp."
+  project_empty: "Không tìm thấy dự án phù hợp.",
+
+  // =========================
+  // PROJECT DETAILS DASHBOARD
+  // =========================
+  dashboard_title: "Dashboard",
+
+  dashboard_electric_title: "NĂNG LƯỢNG ĐIỆN",
+  dashboard_water_title: "HỆ THỐNG NƯỚC",
+  dashboard_gas_title: "HỆ THỐNG KHÍ",
+  dashboard_co2_title: "TỔNG LƯỢNG CO₂E",
+
+  dashboard_power: "CÔNG SUẤT",
+  dashboard_consumption: "TIÊU THỤ",
+  dashboard_flow_rate: "LƯU LƯỢNG",
+  dashboard_volume: "THỂ TÍCH",
+
+  dashboard_co2_formula_title: "CÔNG THỨC TÍNH PHÁT THẢI CO₂E",
+
+  dashboard_co2_electric_title: "1. Công thức tính cho ĐIỆN LƯỚI",
+  dashboard_co2_electric_formula:
+    "Phát thải CO₂e từ điện lưới (tấn CO₂e) = [Tổng điện tiêu thụ (MWh) × Hệ số phát thải lưới (kg CO₂/MWh)] / 1000",
+
+  dashboard_co2_water_title: "2. Công thức tính cho NƯỚC TIÊU THỤ",
+  dashboard_co2_water_formula:
+    "Phát thải CO₂e từ Nước (tấn CO₂e) = [Lượng nước tiêu thụ (m³) × Hệ số phát thải nước (kg CO₂e/m³)] / 1000",
+
+  dashboard_co2_gas_title: "3. Công thức tính cho KHÍ (CNG/Gas)",
+  dashboard_co2_gas_formula:
+    "Phát thải CO₂e của Khí (tấn) = (Lượng phát thải CO₂ × 1) + (Lượng phát thải CH₄ × 29.8) + (Lượng phát thải N₂O × 273)",
+
+  dashboard_co2_total_title:
+    "4. Công thức tính TỔNG PHÁT THẢI RÒNG (Net Emissions)",
+  dashboard_co2_total_formula:
+    "Tổng phát thải ròng (tCO₂e) = (Phát thải Điện lưới + Phát thải Nước + Phát thải Khí Gas) - Tổng giảm phát thải (Solar + BESS)",
+
+  dashboard_co2_note:
+    "*Lưu ý: Hệ số phát thải lưới do Bộ Tài nguyên và Môi trường công bố định kỳ hàng năm.",
+
+  dashboard_trend_instant: "Xu hướng tức thời",
+  dashboard_trend_accumulated: "Xu hướng tích lũy",
+  dashboard_trend_time: "Thời gian",
+  dashboard_trend_date: "Ngày",
+
+  dashboard_trend_increase: "▲ Tăng {percent}% so với hôm qua",
+  dashboard_trend_decrease: "▼ Giảm {percent}% so với hôm qua",
+
+  dashboard_trend_electric: "Điện năng",
+  dashboard_trend_water: "Nước",
+  dashboard_trend_gas: "Khí nén",
+
+  // =========================
+  // DASHBOARD - ENERGY MIX
+  // =========================
+  dashboard_energy_mix_title: "Cơ cấu năng lượng hôm nay",
+  dashboard_energy_solar: "Solar",
+  dashboard_energy_grid: "Lưới điện",
+  dashboard_bess_charge: "BESS Sạc",
+  dashboard_bess_discharge: "BESS Xả",
+  // =========================
+  // DASHBOARD - LOAD
+  // =========================
+  dashboard_load_breakdown_title: "Tải tiêu thụ theo loại",
+  dashboard_load_air_conditioner: "Máy lạnh",
+  dashboard_load_lighting: "Đèn chiếu sáng",
+  dashboard_load_water_pump: "Bơm nước",
+  dashboard_load_other_devices: "Thiết bị khác",
+  // =========================
+  // DASHBOARD - TIME BAND
+  // =========================
+  dashboard_consumption_time_band_title: "Điện năng tiêu thụ theo khung giờ",
+  dashboard_peak_hours: "Giờ cao điểm",
+  dashboard_normal_hours: "Giờ bình thường",
+  // =========================
+  // DASHBOARD - ECONOMIC
+  // =========================
+  dashboard_economic_benefits_costs: "LỢI ÍCH KINH TẾ & CHI PHÍ",
+  dashboard_solar_economic_benefit: "LỢI ÍCH KINH TẾ SOLAR",
+  dashboard_solar_savings_estimate: "Tiết kiệm ước tính từ solar",
+  dashboard_total_load_cost_today: "Tổng phụ tải hôm nay",
+  dashboard_grid_electricity_cost: "Chi phí điện lưới",
+  dashboard_million_vnd: "Triệu VND",
+
+  // =========================
+  // SYSTEM SETTING
+  // =========================
+  system_setting_title: "Cài đặt",
+  system_setting_co2e_convert_title: "Chỉ số phát thải quy đổi CO₂E từng loại",
+  system_setting_co2e_convert_description:
+    "Cấu hình hệ số quy đổi lượng phát thải khí nhà kính (CO₂e) cho từng nguồn năng lượng",
+  system_setting_co2e_convert_factors: "Hệ số phát thải",
+  system_setting_co2e_convert_electricity: "Điện năng",
+  system_setting_co2e_convert_water: "Nước",
+  system_setting_co2e_convert_air: "Khí",
+
+  system_setting_electricity_price_title: "Cài đặt Đơn giá điện & Khung giờ",
+  system_setting_electricity_price_description:
+    "Nhập đơn giá điện (VNĐ/kWh) và thiết lập trực tiếp các khung giờ áp dụng tương ứng",
+  system_setting_electricity_price_add_tier: "Thêm bậc giá",
+  system_setting_electricity_price_tier_title: "Tên bậc giá",
+  system_setting_electricity_price_tier_price: "Đơn giá (VNĐ/kWh)",
+  system_setting_electricity_price_tier_time: "Khung giờ áp dụng",
+  system_setting_electricity_price_tier_time_add: "Thêm khung giờ",
+  system_setting_electricity_price_tier_time_delete: "Xóa",
+  system_setting_electricity_price_tier_save: "Lưu thông số cài đặt",
+  system_setting_electricity_price_tier_save_success:
+    "Đã lưu thông số cài đặt hệ thống thành công! Dữ liệu tính toán phát thải & chi phí đa tự động cập nhật.",
+  system_setting_electricity_price_tier_delete: "Xóa bậc giá này",
 };
 
 export const messages = {
   en: enMessages,
-  vi: viMessages
+  vi: viMessages,
 };
