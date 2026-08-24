@@ -3,10 +3,11 @@ import { Outlet } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { useIntl } from "react-intl";
 
-import Sidebar from "../SideBar/Sidebar";
-import Header from "../Header/Header";
-import Alarm from "../Screen/Alarm/Alarm";
-import "./Layout.scss";
+import Alarm from "../../Screen/Alarm/Alarm";
+import "./MainLayout.scss";
+import MainSidebar from "./Sidebar/MainSidebar";
+import MainHeader from "./Header/MainHeader";
+
 export default function MainLayout() {
   const lang = useIntl();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
@@ -23,10 +24,9 @@ export default function MainLayout() {
   const alarmPanel =
     !isMobile && isAlarmModalOpen ? (
       <div
-        className={`DAT_NotificationPanel_Layer ${sidebarCollapsed
-            ? "DAT_NotificationPanel_Layer_Collapsed"
-            : ""
-          }`}
+        className={`DAT_NotificationPanel_Layer ${
+          sidebarCollapsed ? "DAT_NotificationPanel_Layer_Collapsed" : ""
+        }`}
       >
         <button
           type="button"
@@ -56,10 +56,13 @@ export default function MainLayout() {
           : `layout ${sidebarCollapsed ? "layout-collapsed" : ""}`
       }
     >
-      <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+      <MainSidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
 
       <div className={isMobile ? "layoutMobile-main" : "layout-main"}>
-        <Header onMenuToggle={toggleSidebar} onAlarmClick={toggleAlarmPanel} />
+        <MainHeader
+          onMenuToggle={toggleSidebar}
+          onAlarmClick={toggleAlarmPanel}
+        />
 
         <main className={isMobile ? "layoutMobile-content" : "layout-content"}>
           <Outlet />
