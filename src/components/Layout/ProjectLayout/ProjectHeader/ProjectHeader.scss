@@ -167,10 +167,10 @@
       &_Label {
         position: absolute;
         top: -2px;
-        right: -2px;
+        right: -8px;
         width: 24px;
         height: 20px;
-        padding: 0 6px;
+        padding: 0 14px;
         border-radius: 6px;
         background: rgba(255, 255, 255, 1);
         border: 1px solid var(--border-light);
@@ -202,51 +202,14 @@
       }
     }
 
-    &_User {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      padding: 6px 10px;
-      border-radius: var(--radius-md);
-      transition: background var(--transition-fast);
-      position: relative;
-      border: none;
-      background: rgba(0, 0, 0, 0);
-
-      &:hover {
-        background: var(--pd-text-white-5);
-      }
-
-      &_Avatar {
-        width: 34px;
-        height: 34px;
-        border-radius: var(--radius-full);
-        color: var(--pd-text-white);
-        background: var(--pd-text-white);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-sm);
-      }
-
-      &_Info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        &_Name {
-          font-size: var(--font-size-sm);
-          font-weight: var(--font-weight-semibold);
-          color: var(--pd-text-white);
-        }
-
-        &_Role {
-          font-size: var(--font-size-xs);
-          color: var(--pd-text-white-50);
-        }
-      }
+    &_TimeCounter {
+      background: var(--pd-bg-750);
+      font-family: var(--pd-font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      color: var(--pd-text-200);
+      border-radius: 8px;
     }
   }
 }
