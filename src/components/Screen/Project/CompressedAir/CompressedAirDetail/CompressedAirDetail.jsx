@@ -1,5 +1,6 @@
 import React from "react";
 import { LuChevronLeft } from "react-icons/lu";
+import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CartesianGrid,
@@ -32,8 +33,9 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 export default function CompressedAirDetail() {
+  const lang = useIntl();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { nodeId } = useParams();
 
   const findNode = (nodes, targetId) => {
     for (const node of nodes) {
@@ -48,14 +50,25 @@ export default function CompressedAirDetail() {
     return null;
   };
 
-  const currentNode = findNode(compressedAirDiagramData, id);
+  const currentNode = findNode(compressedAirDiagramData, nodeId);
   const detail =
-    compressedAirDetailData[Number(id)] ||
-    compressedAirDetailData[id] ||
+    compressedAirDetailData[Number(nodeId)] ||
+    compressedAirDetailData[nodeId] ||
     (currentNode ? compressedAirDetailData[currentNode.id] : null) ||
     compressedAirDetailData[1];
 
   const chartData = detail?.chart || [];
+  const detailName =
+    currentNode?.data?.title ||
+    detail?.title?.replace(/^Giám sát chi tiết Khí nén\s*/i, "") ||
+    "";
+  const descKeyMap = {
+    "Áp suất đường ống": "air_desc_pipe_pressure",
+    "Áp suất đường ống xưởng": "air_desc_workshop_pipe_pressure",
+    "Lưu lượng tức thời": "air_desc_instant_flow",
+    "Lưu lượng phân xưởng": "air_desc_workshop_flow",
+    "Thể tích tích lũy": "air_desc_accumulated_volume",
+  };
 
   return (
     <div className="DAT_AirDetail">
@@ -69,45 +82,45 @@ export default function CompressedAirDetail() {
           <LuChevronLeft />
         </button>
         <h2 className="DAT_AirDetail_Header_Title">
-          {detail?.title || `Giám sát chi tiết Khí nén ${currentNode?.data?.title || ""}`}
+          {lang.formatMessage({ id: "air_detail_fallback_title" }, { title: detailName })}
         </h2>
       </div>
 
       {/* 3 Thẻ chỉ số */}
       <div className="DAT_AirDetail_StatCards">
         <div className="DAT_AirDetail_StatCards_Card">
-          <span className="DAT_AirDetail_StatCards_Card_Label">Áp suất khí</span>
+          <span className="DAT_AirDetail_StatCards_Card_Label">{lang.formatMessage({ id: "air_detail_pressure" })}</span>
           <div className="DAT_AirDetail_StatCards_Card_ValueGroup">
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Value">{detail?.pressure?.value}</span>
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Unit">{detail?.pressure?.unit}</span>
           </div>
-          <span className="DAT_AirDetail_StatCards_Card_Sub">{detail?.pressure?.desc}</span>
+          <span className="DAT_AirDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.pressure?.desc] || "air_desc_pipe_pressure" })}</span>
         </div>
 
         <div className="DAT_AirDetail_StatCards_Card">
-          <span className="DAT_AirDetail_StatCards_Card_Label">Lưu lượng khí</span>
+          <span className="DAT_AirDetail_StatCards_Card_Label">{lang.formatMessage({ id: "air_detail_flow" })}</span>
           <div className="DAT_AirDetail_StatCards_Card_ValueGroup">
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Value">{detail?.flowRate?.value}</span>
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Unit">{detail?.flowRate?.unit}</span>
           </div>
-          <span className="DAT_AirDetail_StatCards_Card_Sub">{detail?.flowRate?.desc}</span>
+          <span className="DAT_AirDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.flowRate?.desc] || "air_desc_instant_flow" })}</span>
         </div>
 
         <div className="DAT_AirDetail_StatCards_Card">
-          <span className="DAT_AirDetail_StatCards_Card_Label">Tổng thể tích khí</span>
+          <span className="DAT_AirDetail_StatCards_Card_Label">{lang.formatMessage({ id: "air_detail_total_volume" })}</span>
           <div className="DAT_AirDetail_StatCards_Card_ValueGroup">
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Value">{detail?.totalVolume?.value}</span>
             <span className="DAT_AirDetail_StatCards_Card_ValueGroup_Unit">{detail?.totalVolume?.unit}</span>
           </div>
-          <span className="DAT_AirDetail_StatCards_Card_Sub">{detail?.totalVolume?.desc}</span>
+          <span className="DAT_AirDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.totalVolume?.desc] || "air_desc_accumulated_volume" })}</span>
         </div>
       </div>
 
       {/* Khung Đồ Thị Recharts */}
       <div className="DAT_AirDetail_ChartCard">
         <div className="DAT_AirDetail_ChartCard_Header">
-          <h3 className="DAT_AirDetail_ChartCard_Header_Title">Đồ thị lưu lượng khí tức thời</h3>
-          <p className="DAT_AirDetail_ChartCard_Header_Sub">Theo dõi lưu lượng khí tức thời (Nm³/h)</p>
+          <h3 className="DAT_AirDetail_ChartCard_Header_Title">{lang.formatMessage({ id: "air_detail_chart_title" })}</h3>
+          <p className="DAT_AirDetail_ChartCard_Header_Sub">{lang.formatMessage({ id: "air_detail_chart_subtitle" })}</p>
         </div>
 
         <div className="DAT_AirDetail_ChartCard_Wrap">
@@ -153,7 +166,7 @@ export default function CompressedAirDetail() {
                 tickLine={false}
                 dy={10}
                 label={{
-                  value: "Thời gian",
+                  value: lang.formatMessage({ id: "project_monitor_time" }),
                   position: "insideBottom",
                   offset: -12,
                   fill: "rgba(148, 163, 184, 1)",

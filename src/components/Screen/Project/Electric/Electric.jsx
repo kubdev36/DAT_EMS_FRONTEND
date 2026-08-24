@@ -9,19 +9,20 @@ import {
   LuX,
   LuZap,
 } from "react-icons/lu";
+import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import { electricDiagramData } from "../../../Data/Data";
 import "./Electric.scss";
 
 // Node vẽ cây đệ quy
-function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
+function TreeNode({ node, isRoot = false, onOpenModal, navigate, lang }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const hasChildren = node.children && node.children.length > 0;
 
   return (
     <div className={`DAT_Electric_Branch ${isRoot ? "DAT_Electric_Branch_Root" : ""}`}>
       <div className={isRoot ? "DAT_Electric_Branch_ZoneRoot" : ""}>
-        {isRoot && <div className="DAT_Electric_Branch_ZoneRoot_Label">KHU VỰC NGOÀI PHÒNG SHOWROOM</div>}
+        {isRoot && <div className="DAT_Electric_Branch_ZoneRoot_Label">{lang.formatMessage({ id: "electric_outdoor_zone" })}</div>}
 
         <div className="DAT_Electric_Branch_NodeWrapper">
           {!isRoot && <div className="DAT_Electric_Branch_NodeWrapper_ChildLabel">{node.data.title}</div>}
@@ -33,7 +34,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 <div className="DAT_Electric_Branch_NodeWrapper_Card_Actions">
                   <button
                     type="button"
-                    title="Thêm trạm con"
+                    title={lang.formatMessage({ id: "project_monitor_add_child" })}
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenModal("add", node.id, node.data.title);
@@ -44,7 +45,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                   <button
                     type="button"
                     className="DAT_Electric_Branch_NodeWrapper_Card_Actions_Delete"
-                    title="Xóa MCB tổng"
+                    title={lang.formatMessage({ id: "electric_delete_root" })}
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenModal("delete", node.id, node.data.title);
@@ -59,7 +60,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 <div className="DAT_Electric_Branch_NodeWrapper_Card_Actions">
                   <button
                     type="button"
-                    title="Thêm trạm con"
+                    title={lang.formatMessage({ id: "project_monitor_add_child" })}
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenModal("add", node.id, node.data.title);
@@ -70,7 +71,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                   <button
                     type="button"
                     className="DAT_Electric_Branch_NodeWrapper_Card_Actions_Delete"
-                    title="Xóa trạm"
+                    title={lang.formatMessage({ id: "project_monitor_delete_station" })}
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenModal("delete", node.id, node.data.title);
@@ -85,7 +86,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
             <div className="DAT_Electric_Branch_NodeWrapper_Card_Body">
               {node.data.metrics.map((m, i) => (
                 <p key={i}>
-                  <span>{m.label}</span>
+                  <span>{lang.formatMessage({ id: i === 0 ? "electric_metric_energy" : "electric_metric_power" })}</span>
                   <strong>{m.value} {m.unit}</strong>
                 </p>
               ))}
@@ -117,11 +118,12 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                       node={child}
                       onOpenModal={onOpenModal}
                       navigate={navigate}
+                      lang={lang}
                     />
                   </div>
                 ))}
               </div>
-              <div className="DAT_Electric_Branch_ChildrenWrap_ZoneChildren_Label">KHU VỰC PHÒNG SHOWROOM</div>
+              <div className="DAT_Electric_Branch_ChildrenWrap_ZoneChildren_Label">{lang.formatMessage({ id: "electric_showroom_zone" })}</div>
             </div>
           </div>
         </>
@@ -131,6 +133,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
 }
 
 export default function Electric() {
+  const lang = useIntl();
   const navigate = useNavigate();
   const [treeList, setTreeList] = useState(electricDiagramData || []);
   const [currentPage, setCurrentPage] = useState(0);
@@ -204,7 +207,7 @@ export default function Electric() {
     <div className="DAT_Electric">
       {/* Tag hệ thống góc ngoài cùng bên trái */}
       <div className="DAT_Electric_SystemTag">
-        <LuZap /> <span>HỆ THỐNG ĐIỆN</span>
+        <LuZap /> <span>{lang.formatMessage({ id: "electric_system_title" })}</span>
       </div>
 
       {/* Top bar nút tạo MCB tổng */}
@@ -214,7 +217,7 @@ export default function Electric() {
           className="DAT_Electric_TopBar_AddRootBtn"
           onClick={() => openModal("add-root", null, "MCB TỔNG")}
         >
-          <LuPlus /> <span>Tạo MCB tổng</span>
+          <LuPlus /> <span>{lang.formatMessage({ id: "electric_create_root" })}</span>
         </button>
       </div>
 
@@ -241,6 +244,7 @@ export default function Electric() {
                   isRoot
                   onOpenModal={openModal}
                   navigate={navigate}
+                  lang={lang}
                 />
               )}
             </div>
@@ -272,10 +276,10 @@ export default function Electric() {
             <div className="DAT_Electric_ModalOverlay_Modal_Header">
               <h3>
                 {modal.type === "delete"
-                  ? "Xác nhận xóa"
+                  ? lang.formatMessage({ id: "project_monitor_confirm_delete" })
                   : modal.type === "add-root"
-                  ? "Tạo MCB tổng mới"
-                  : `Thêm trạm con cho [${modal.title}]`}
+                  ? lang.formatMessage({ id: "electric_create_root_title" })
+                  : lang.formatMessage({ id: "project_monitor_add_child_for" }, { title: modal.title })}
               </h3>
               <button type="button" onClick={closeModal}><LuX /></button>
             </div>
@@ -284,28 +288,28 @@ export default function Electric() {
               <div>
                 <div className="DAT_Electric_ModalOverlay_Modal_Body">
                   <p>
-                    Bạn có chắc muốn xóa trạm <strong>{modal.title}</strong> và toàn bộ nhánh con?
+                    {lang.formatMessage({ id: "project_monitor_delete_message" }, { title: modal.title })}
                   </p>
                 </div>
                 <div className="DAT_Electric_ModalOverlay_Modal_Footer">
-                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>Hủy</button>
-                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnDelete" onClick={handleDeleteSubmit}>Xóa ngay</button>
+                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>{lang.formatMessage({ id: "project_monitor_cancel" })}</button>
+                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnDelete" onClick={handleDeleteSubmit}>{lang.formatMessage({ id: "project_monitor_delete_now" })}</button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleAddSubmit}>
                 <div className="DAT_Electric_ModalOverlay_Modal_Body">
-                  <label>{modal.type === "add-root" ? "Tên MCB tổng mới:" : "Tên trạm con mới:"}</label>
+                  <label>{modal.type === "add-root" ? lang.formatMessage({ id: "electric_root_name" }) : lang.formatMessage({ id: "project_monitor_child_station_name" })}</label>
                   <input
                     autoFocus
                     value={inputVal}
                     onChange={(e) => setInputVal(e.target.value)}
-                    placeholder={modal.type === "add-root" ? "Ví dụ: MCB TỔNG 3" : "Ví dụ: MAY NEN KHI 1"}
+                    placeholder={modal.type === "add-root" ? lang.formatMessage({ id: "electric_root_placeholder" }) : lang.formatMessage({ id: "electric_child_placeholder" })}
                   />
                 </div>
                 <div className="DAT_Electric_ModalOverlay_Modal_Footer">
-                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>Hủy</button>
-                  <button type="submit" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnSubmit">Xác nhận</button>
+                  <button type="button" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>{lang.formatMessage({ id: "project_monitor_cancel" })}</button>
+                  <button type="submit" className="DAT_Electric_ModalOverlay_Modal_Footer_BtnSubmit">{lang.formatMessage({ id: "project_monitor_confirm" })}</button>
                 </div>
               </form>
             )}

@@ -9,11 +9,12 @@ import {
   LuTrash2,
   LuX,
 } from "react-icons/lu";
+import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import { waterDiagramData } from "../../../Data/Data";
 import "./Water.scss";
 
-function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
+function TreeNode({ node, isRoot = false, onOpenModal, navigate, lang }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const hasChildren = node.children && node.children.length > 0;
 
@@ -29,7 +30,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
               <div className="DAT_Water_Branch_NodeWrapper_Card_Actions">
                 <button
                   type="button"
-                  title="Thêm trạm con"
+                  title={lang.formatMessage({ id: "project_monitor_add_child" })}
                   onClick={(e) => {
                     e.stopPropagation();
                     onOpenModal("add", node.id, node.data.title);
@@ -40,7 +41,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 <button
                   type="button"
                   className="DAT_Water_Branch_NodeWrapper_Card_Actions_Delete"
-                  title="Xóa trạm tổng nước"
+                  title={lang.formatMessage({ id: "water_delete_root" })}
                   onClick={(e) => {
                     e.stopPropagation();
                     onOpenModal("delete", node.id, node.data.title);
@@ -55,7 +56,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
               <div className="DAT_Water_Branch_NodeWrapper_Card_Actions">
                 <button
                   type="button"
-                  title="Thêm trạm con"
+                  title={lang.formatMessage({ id: "project_monitor_add_child" })}
                   onClick={(e) => {
                     e.stopPropagation();
                     onOpenModal("add", node.id, node.data.title);
@@ -66,7 +67,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 <button
                   type="button"
                   className="DAT_Water_Branch_NodeWrapper_Card_Actions_Delete"
-                  title="Xóa trạm"
+                  title={lang.formatMessage({ id: "project_monitor_delete_station" })}
                   onClick={(e) => {
                     e.stopPropagation();
                     onOpenModal("delete", node.id, node.data.title);
@@ -81,7 +82,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
           <div className="DAT_Water_Branch_NodeWrapper_Card_Body">
             {node.data.metrics.map((m, i) => (
               <p key={i}>
-                <span>{m.label}</span>
+                <span>{lang.formatMessage({ id: i === 0 ? "water_metric_total" : "water_metric_flow" })}</span>
                 <strong>
                   {m.value} {m.unit}
                 </strong>
@@ -110,10 +111,11 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
                 <div key={child.id || idx} className="DAT_Water_Branch_ChildrenWrap_Grid_Col">
                   <div className="DAT_Water_Branch_ChildrenWrap_Grid_Col_LineUp" />
                   <TreeNode
-                    node={child}
-                    onOpenModal={onOpenModal}
-                    navigate={navigate}
-                  />
+                  node={child}
+                  onOpenModal={onOpenModal}
+                  navigate={navigate}
+                  lang={lang}
+                />
                 </div>
               ))}
             </div>
@@ -125,6 +127,7 @@ function TreeNode({ node, isRoot = false, onOpenModal, navigate }) {
 }
 
 export default function Water() {
+  const lang = useIntl();
   const navigate = useNavigate();
   const [treeList, setTreeList] = useState(waterDiagramData || []);
   const [currentPage, setCurrentPage] = useState(0);
@@ -198,7 +201,7 @@ export default function Water() {
     <div className="DAT_Water">
       {/* Tag hệ thống nằm ngoài góc trái */}
       <div className="DAT_Water_SystemTag">
-        <LuDroplet /> <span>HỆ THỐNG NƯỚC</span>
+        <LuDroplet /> <span>{lang.formatMessage({ id: "water_system_title" })}</span>
       </div>
 
       {/* Nút tạo trạm góc phải */}
@@ -208,7 +211,7 @@ export default function Water() {
           className="DAT_Water_TopBar_AddRootBtn"
           onClick={() => openModal("add-root", null, "TRẠM TỔNG NƯỚC")}
         >
-          <LuPlus /> <span>Tạo trạm tổng nước</span>
+          <LuPlus /> <span>{lang.formatMessage({ id: "water_create_root" })}</span>
         </button>
       </div>
 
@@ -235,6 +238,7 @@ export default function Water() {
                   isRoot
                   onOpenModal={openModal}
                   navigate={navigate}
+                  lang={lang}
                 />
               )}
             </div>
@@ -266,10 +270,10 @@ export default function Water() {
             <div className="DAT_Water_ModalOverlay_Modal_Header">
               <h3>
                 {modal.type === "delete"
-                  ? "Xác nhận xóa"
+                  ? lang.formatMessage({ id: "project_monitor_confirm_delete" })
                   : modal.type === "add-root"
-                  ? "Tạo trạm tổng nước mới"
-                  : `Thêm trạm con cho [${modal.title}]`}
+                  ? lang.formatMessage({ id: "water_create_root_title" })
+                  : lang.formatMessage({ id: "project_monitor_add_child_for" }, { title: modal.title })}
               </h3>
               <button type="button" onClick={closeModal}>
                 <LuX />
@@ -280,35 +284,35 @@ export default function Water() {
               <div>
                 <div className="DAT_Water_ModalOverlay_Modal_Body">
                   <p>
-                    Bạn có chắc muốn xóa trạm <strong>{modal.title}</strong> và toàn bộ nhánh con?
+                    {lang.formatMessage({ id: "project_monitor_delete_message" }, { title: modal.title })}
                   </p>
                 </div>
                 <div className="DAT_Water_ModalOverlay_Modal_Footer">
                   <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>
-                    Hủy
+                    {lang.formatMessage({ id: "project_monitor_cancel" })}
                   </button>
                   <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnDelete" onClick={handleDeleteSubmit}>
-                    Xóa ngay
+                    {lang.formatMessage({ id: "project_monitor_delete_now" })}
                   </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleAddSubmit}>
                 <div className="DAT_Water_ModalOverlay_Modal_Body">
-                  <label>{modal.type === "add-root" ? "Tên trạm tổng mới:" : "Tên trạm con mới:"}</label>
+                  <label>{modal.type === "add-root" ? lang.formatMessage({ id: "water_root_name" }) : lang.formatMessage({ id: "project_monitor_child_station_name" })}</label>
                   <input
                     autoFocus
                     value={inputVal}
                     onChange={(e) => setInputVal(e.target.value)}
-                    placeholder={modal.type === "add-root" ? "Ví dụ: TRẠM TỔNG NƯỚC 2" : "Ví dụ: DEMO 6 BƠM"}
+                    placeholder={modal.type === "add-root" ? lang.formatMessage({ id: "water_root_placeholder" }) : lang.formatMessage({ id: "water_child_placeholder" })}
                   />
                 </div>
                 <div className="DAT_Water_ModalOverlay_Modal_Footer">
                   <button type="button" className="DAT_Water_ModalOverlay_Modal_Footer_BtnCancel" onClick={closeModal}>
-                    Hủy
+                    {lang.formatMessage({ id: "project_monitor_cancel" })}
                   </button>
                   <button type="submit" className="DAT_Water_ModalOverlay_Modal_Footer_BtnSubmit">
-                    Xác nhận
+                    {lang.formatMessage({ id: "project_monitor_confirm" })}
                   </button>
                 </div>
               </form>

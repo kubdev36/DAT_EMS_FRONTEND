@@ -1,5 +1,6 @@
 import React from "react";
 import { LuChevronLeft } from "react-icons/lu";
+import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CartesianGrid,
@@ -29,6 +30,7 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 export default function WaterDetail() {
+  const lang = useIntl();
   const navigate = useNavigate();
   const { nodeId } = useParams();
 
@@ -56,6 +58,19 @@ export default function WaterDetail() {
     waterDetailData[1];
 
   const chartData = detail?.chart || [];
+  const detailName =
+    currentNode?.data?.title ||
+    detail?.title?.replace(/^Giám sát chi tiết Nước\s*/i, "") ||
+    "";
+  const descKeyMap = {
+    "Áp suất đường ống": "water_desc_pipe_pressure",
+    "Áp suất đầu đẩy": "water_desc_discharge_pressure",
+    "Lưu lượng tức thời": "water_desc_instant_flow",
+    "Lưu lượng trạm 4 bơm": "water_desc_four_pump_flow",
+    "Lưu lượng trạm 2 bơm": "water_desc_two_pump_flow",
+    "Thể tích tích lũy": "water_desc_accumulated_volume",
+    "Tổng lượng nước bơm": "water_desc_total_pumped",
+  };
 
   return (
     <div className="DAT_WaterDetail">
@@ -69,45 +84,45 @@ export default function WaterDetail() {
           <LuChevronLeft />
         </button>
         <h2 className="DAT_WaterDetail_Header_Title">
-          {detail?.title || `Giám sát chi tiết Nước ${currentNode?.data?.title || ""}`}
+          {lang.formatMessage({ id: "water_detail_fallback_title" }, { title: detailName })}
         </h2>
       </div>
 
       {/* 3 Stat Cards */}
       <div className="DAT_WaterDetail_StatCards">
         <div className="DAT_WaterDetail_StatCards_Card">
-          <span className="DAT_WaterDetail_StatCards_Card_Label">Áp suất nước</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Label">{lang.formatMessage({ id: "water_detail_pressure" })}</span>
           <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.pressure?.value}</span>
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.pressure?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.pressure?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.pressure?.desc] || "water_desc_pipe_pressure" })}</span>
         </div>
 
         <div className="DAT_WaterDetail_StatCards_Card">
-          <span className="DAT_WaterDetail_StatCards_Card_Label">Lưu lượng nước</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Label">{lang.formatMessage({ id: "water_detail_flow" })}</span>
           <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.flowRate?.value}</span>
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.flowRate?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.flowRate?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.flowRate?.desc] || "water_desc_instant_flow" })}</span>
         </div>
 
         <div className="DAT_WaterDetail_StatCards_Card">
-          <span className="DAT_WaterDetail_StatCards_Card_Label">Tổng thể tích nước</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Label">{lang.formatMessage({ id: "water_detail_total_volume" })}</span>
           <div className="DAT_WaterDetail_StatCards_Card_ValueGroup">
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Value">{detail?.totalVolume?.value}</span>
             <span className="DAT_WaterDetail_StatCards_Card_ValueGroup_Unit">{detail?.totalVolume?.unit}</span>
           </div>
-          <span className="DAT_WaterDetail_StatCards_Card_Sub">{detail?.totalVolume?.desc}</span>
+          <span className="DAT_WaterDetail_StatCards_Card_Sub">{lang.formatMessage({ id: descKeyMap[detail?.totalVolume?.desc] || "water_desc_accumulated_volume" })}</span>
         </div>
       </div>
 
       {/* Đồ thị Recharts */}
       <div className="DAT_WaterDetail_ChartCard">
         <div className="DAT_WaterDetail_ChartCard_Header">
-          <h3 className="DAT_WaterDetail_ChartCard_Header_Title">Đồ thị lưu lượng nước tức thời</h3>
-          <p className="DAT_WaterDetail_ChartCard_Header_Sub">Theo dõi lưu lượng nước tức thời (m³/h)</p>
+          <h3 className="DAT_WaterDetail_ChartCard_Header_Title">{lang.formatMessage({ id: "water_detail_chart_title" })}</h3>
+          <p className="DAT_WaterDetail_ChartCard_Header_Sub">{lang.formatMessage({ id: "water_detail_chart_subtitle" })}</p>
         </div>
 
         <div className="DAT_WaterDetail_ChartCard_Wrap">
@@ -153,7 +168,7 @@ export default function WaterDetail() {
                 tickLine={false}
                 dy={10}
                 label={{
-                  value: "Thời gian",
+                  value: lang.formatMessage({ id: "project_monitor_time" }),
                   position: "insideBottom",
                   offset: -12,
                   fill: "rgba(148, 163, 184, 1)",

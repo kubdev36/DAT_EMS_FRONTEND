@@ -12,12 +12,14 @@ import {
   Legend,
 } from "chart.js";
 import { LuChevronLeft } from "react-icons/lu";
+import { useIntl } from "react-intl";
 import { electricDetailData } from "../../../../Data/Data";
 import "./ElectricDetail.scss";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 export default function ElectricDetail() {
+  const lang = useIntl();
   const navigate = useNavigate();
   const { nodeId } = useParams();
   const detail = electricDetailData[Number(nodeId)] || electricDetailData[nodeId] || electricDetailData[1];
@@ -59,7 +61,7 @@ export default function ElectricDetail() {
       x: {
         title: {
           display: true,
-          text: "Thời gian",
+          text: lang.formatMessage({ id: "project_monitor_time" }),
           color: "rgba(125, 143, 166, 1)",
           font: { size: 11 },
           padding: { top: 8 },
@@ -100,17 +102,19 @@ export default function ElectricDetail() {
         >
           <LuChevronLeft />
         </button>
-        <h2 className="DAT_ElectricDetail_Header_Title">{detail.title}</h2>
+        <h2 className="DAT_ElectricDetail_Header_Title">
+          {lang.formatMessage({ id: "electric_detail_title" }, { title: detail.title.replace(/^Giám sát chi tiết Điện năng\s*/i, "") })}
+        </h2>
       </div>
 
       {/* 4 Cards Grid */}
       <div className="DAT_ElectricDetail_Grid">
         {/* Card 1: Điện năng tiêu thụ */}
         <section className="DAT_ElectricDetail_Grid_Card">
-          <h3 className="DAT_ElectricDetail_Grid_Card_TitleCyan">Điện năng tiêu thụ</h3>
+          <h3 className="DAT_ElectricDetail_Grid_Card_TitleCyan">{lang.formatMessage({ id: "electric_detail_energy_title" })}</h3>
 
           <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
-            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Tổng tích lũy</span>
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">{lang.formatMessage({ id: "electric_detail_total" })}</span>
             <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
               <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_BigNum">{detail.energy.total}</strong>
               <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
@@ -120,7 +124,7 @@ export default function ElectricDetail() {
           <div className="DAT_ElectricDetail_Grid_Card_Divider" />
 
           <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
-            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Hôm nay</span>
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">{lang.formatMessage({ id: "electric_detail_today" })}</span>
             <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
               <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_MidNum">{detail.energy.today}</strong>
               <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
@@ -130,7 +134,7 @@ export default function ElectricDetail() {
           <div className="DAT_ElectricDetail_Grid_Card_Divider" />
 
           <div className="DAT_ElectricDetail_Grid_Card_EnergySection">
-            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">Tháng này</span>
+            <span className="DAT_ElectricDetail_Grid_Card_EnergySection_Label">{lang.formatMessage({ id: "electric_detail_month" })}</span>
             <div className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow">
               <strong className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_MidNum">{detail.energy.month}</strong>
               <span className="DAT_ElectricDetail_Grid_Card_EnergySection_ValueRow_Unit">kWh</span>
@@ -142,7 +146,16 @@ export default function ElectricDetail() {
         <div className="DAT_ElectricDetail_Grid_PowersCol">
           {detail.powers.map((p, idx) => (
             <section key={idx} className="DAT_ElectricDetail_Grid_PowersCol_PowerCard">
-              <h3 className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_TitleCyan">{p.label}</h3>
+              <h3 className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_TitleCyan">
+                {lang.formatMessage({
+                  id:
+                    p.label === "Công suất tiêu thụ"
+                      ? "electric_detail_consumed_power"
+                      : p.label === "reactivePower"
+                      ? "electric_detail_reactive_power"
+                      : "electric_detail_apparent_power",
+                })}
+              </h3>
               <div className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow">
                 <strong className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow_BigNum">{p.value}</strong>
                 <span className="DAT_ElectricDetail_Grid_PowersCol_PowerCard_ValueRow_Unit">{p.unit}</span>
@@ -153,10 +166,10 @@ export default function ElectricDetail() {
 
         {/* Card 3: ĐIỆN ÁP & DÒNG ĐIỆN 3 PHA */}
         <section className="DAT_ElectricDetail_Grid_PhaseCard">
-          <h3>ĐIỆN ÁP & DÒNG ĐIỆN 3 PHA</h3>
+          <h3>{lang.formatMessage({ id: "electric_detail_phase_title" })}</h3>
           <div className="DAT_ElectricDetail_Grid_PhaseCard_Header">
-            <span>Điện áp (V)</span>
-            <span>Dòng điện (A)</span>
+            <span>{lang.formatMessage({ id: "electric_detail_voltage" })}</span>
+            <span>{lang.formatMessage({ id: "electric_detail_current" })}</span>
           </div>
 
           <div className="DAT_ElectricDetail_Grid_PhaseCard_List">
@@ -190,15 +203,15 @@ export default function ElectricDetail() {
 
           <div className="DAT_ElectricDetail_Grid_PhaseCard_Legend">
             <span className="dot dot-purple"></span>
-            <label>Điện áp 3 pha</label>
+            <label>{lang.formatMessage({ id: "electric_detail_voltage_legend" })}</label>
             <span className="dot dot-orange"></span>
-            <label>Dòng điện 3 pha</label>
+            <label>{lang.formatMessage({ id: "electric_detail_current_legend" })}</label>
           </div>
         </section>
 
         {/* Card 4: CHẤT LƯỢNG ĐIỆN NĂNG */}
         <section className="DAT_ElectricDetail_Grid_PhaseCard">
-          <h3>CHẤT LƯỢNG ĐIỆN NĂNG</h3>
+          <h3>{lang.formatMessage({ id: "electric_detail_quality_title" })}</h3>
           <div className="DAT_ElectricDetail_Grid_PhaseCard_Header">
             <span>THDv (%)</span>
             <span>THDi (%)</span>
@@ -244,8 +257,8 @@ export default function ElectricDetail() {
 
       {/* Chart Section */}
       <section className="DAT_ElectricDetail_ChartCard">
-        <h3 className="DAT_ElectricDetail_ChartCard_Title">Đồ thị công suất tức thời</h3>
-        <p className="DAT_ElectricDetail_ChartCard_Sub">Theo dõi công suất tức thời 24h (kW)</p>
+        <h3 className="DAT_ElectricDetail_ChartCard_Title">{lang.formatMessage({ id: "electric_detail_chart_title" })}</h3>
+        <p className="DAT_ElectricDetail_ChartCard_Sub">{lang.formatMessage({ id: "electric_detail_chart_subtitle" })}</p>
         <div className="DAT_ElectricDetail_ChartCard_Wrap">
           <Line data={chartData} options={chartOptions} />
         </div>
