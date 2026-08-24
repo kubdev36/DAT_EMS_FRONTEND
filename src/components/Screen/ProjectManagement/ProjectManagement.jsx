@@ -12,10 +12,6 @@ import {
 import { projects } from "../../Data/Data";
 import "./ProjectManagement.scss";
 
-const getStatusTone = (status) => {
-  return status === "Đang vận hành" ? "success" : "danger";
-};
-
 export default function ProjectManagement() {
   const lang = useIntl();
   const navigate = useNavigate();
@@ -34,14 +30,14 @@ export default function ProjectManagement() {
 
   return (
     <section className="DAT_ProjectManagement">
-      <div className="DAT_ProjectManagement_PageHeader">
-        <div>
+      <div className="header">
+        <div className="header-info">
           <h1>{lang.formatMessage({ id: "project_list_title" })}</h1>
           <p>{lang.formatMessage({ id: "project_list_description" })}</p>
         </div>
 
-        <div className="DAT_ProjectManagement_PageHeader_Actions">
-          <label className="DAT_ProjectManagement_Search">
+        <div className="header-actions">
+          <label className="search-box">
             <LuSearch />
             <input
               value={searchTerm}
@@ -52,15 +48,15 @@ export default function ProjectManagement() {
             />
           </label>
 
-          <button type="button" className="DAT_ProjectManagement_Create">
+          <button type="button" className="btn-create">
             <LuPlus />
             <span>{lang.formatMessage({ id: "project_create" })}</span>
           </button>
         </div>
       </div>
 
-      <div className="DAT_ProjectManagement_TableWrap">
-        <table className="DAT_ProjectManagement_Table">
+      <div className="table-wrap">
+        <table>
           <thead>
             <tr>
               <th>{lang.formatMessage({ id: "project_name" })}</th>
@@ -75,21 +71,21 @@ export default function ProjectManagement() {
             {filteredProjects.map((project) => (
               <tr key={project.id}>
                 <td>
-                  <div className="DAT_ProjectManagement_ProjectName">
+                  <div className="project-name">
                     <strong>{project.name}</strong>
                     <small>{project.id}</small>
                   </div>
                 </td>
 
                 <td>
-                  <div className="DAT_ProjectManagement_CellIcon">
+                  <div className="cell-icon">
                     <LuMapPin />
                     <span>{project.address}</span>
                   </div>
                 </td>
 
                 <td>
-                  <div className="DAT_ProjectManagement_CellIcon">
+                  <div className="cell-icon">
                     <LuCalendarDays />
                     <span>{project.createdAt}</span>
                   </div>
@@ -97,16 +93,19 @@ export default function ProjectManagement() {
 
                 <td>
                   <span
-                    className={`DAT_ProjectManagement_Status DAT_ProjectManagement_Status_${getStatusTone(project.status)}`}
+                    className={`status-badge ${
+                      project.status === "Đang vận hành" ? "success" : "danger"
+                    }`}
                   >
                     {project.status}
                   </span>
                 </td>
 
                 <td>
-                  <div className="DAT_ProjectManagement_RowActions">
+                  <div className="row-actions">
                     <button
                       type="button"
+                      className="btn-open"
                       title={lang.formatMessage({ id: "project_open" })}
                       onClick={() => navigate(`/project/${project.id}`)}
                     >
@@ -114,7 +113,7 @@ export default function ProjectManagement() {
                     </button>
                     <button
                       type="button"
-                      className="DAT_ProjectManagement_RowActions_Delete"
+                      className="btn-delete"
                       title={lang.formatMessage({ id: "project_delete" })}
                     >
                       <LuTrash2 />
@@ -127,7 +126,7 @@ export default function ProjectManagement() {
         </table>
 
         {filteredProjects.length === 0 && (
-          <div className="DAT_ProjectManagement_Empty">
+          <div className="empty-state">
             {lang.formatMessage({ id: "project_empty" })}
           </div>
         )}
