@@ -8,6 +8,8 @@ import { createRoot } from "react-dom/client";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Button } from "primereact/button";
+import { LuChevronLeft } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 const emptyElectricityPriceTiers = {
   id: null,
@@ -23,6 +25,7 @@ const emptyElectricityPriceTiers = {
 
 const SystemSetting = () => {
   const lang = useIntl();
+  const navigate = useNavigate();
   const [co2eConvertFactors, setCo2eConvertFactors] = useState({
     electricity: 0.7222,
     water: 0.35,
@@ -158,6 +161,25 @@ const SystemSetting = () => {
     setCurrentTimeSlotToDelete(null);
   };
 
+  const handleTimeSlotChange = (tierIndex, slotIndex, field, value) => {
+    setElectricityPriceTiers((prevTiers) => {
+      // Deep clone the necessary parts to avoid mutation
+      const newTiers = [...prevTiers];
+      const newTier = { ...newTiers[tierIndex] };
+      const newTimeSlots = [...newTier.timeSlots];
+
+      newTimeSlots[slotIndex] = {
+        ...newTimeSlots[slotIndex],
+        [field]: value,
+      };
+
+      newTier.timeSlots = newTimeSlots;
+      newTiers[tierIndex] = newTier;
+
+      return newTiers;
+    });
+  };
+
   return (
     <div className="DAT_SystemSetting">
       <Toast
@@ -205,8 +227,16 @@ const SystemSetting = () => {
         className={`DAT_SystemSetting_ConfirmDialog`}
       />
 
-      <div className="DAT_SystemSetting_Title">
-        {lang.formatMessage({ id: "system_setting_title" })}
+      <div className={`DAT_SystemSetting_Header`}>
+        <button
+          className="DAT_SystemSetting_Header_BackBtn"
+          onClick={() => navigate("/dashboard")}
+        >
+          <LuChevronLeft />
+        </button>
+        <div className="DAT_SystemSetting_Header_Title">
+          {lang.formatMessage({ id: "system_setting_title" })}
+        </div>
       </div>
       <div className={`DAT_NavyCard DAT_SystemSetting_CO2EConvert`}>
         <div className={`DAT_SystemSetting_CO2EConvert_Head`}>
@@ -386,14 +416,14 @@ const SystemSetting = () => {
                 </div>
                 <input
                   type="text"
-                  value={tier.unitPrice}
+                  value={tier.tierName}
                   onChange={(e) => {
                     const newPrice = e.target.value;
                     setElectricityPriceTiers((prevTiers) => {
                       const updatedTiers = [...prevTiers];
                       updatedTiers[index] = {
                         ...updatedTiers[index],
-                        unitPrice: newPrice,
+                        tierName: newPrice,
                       };
                       return updatedTiers;
                     });
@@ -415,7 +445,7 @@ const SystemSetting = () => {
                   className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_UnitPriceCol_InputField_Row`}
                 >
                   <input
-                    type="text"
+                    type="number"
                     value={tier.unitPrice}
                     onChange={(e) => {
                       const newPrice = e.target.value;
@@ -487,23 +517,20 @@ const SystemSetting = () => {
                 >
                   {tier.timeSlots.map((slot, slotIndex) => (
                     <div
-                      key={`${slot.startTime}-${slot.endTime}-${slotIndex}`}
+                      key={slotIndex} // FIXED: Don't use changing values in the key
                       className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_TimeCol_Body_Row`}
                     >
                       <input
                         type="text"
                         value={slot.startTime}
-                        onChange={(e) => {
-                          const newSlot = e.target.value;
-                          setElectricityPriceTiers((prevTiers) => {
-                            const updatedTiers = [...prevTiers];
-                            updatedTiers[index].timeSlots[slotIndex] = {
-                              ...updatedTiers[index].timeSlots[slotIndex],
-                              startTime: newSlot,
-                            };
-                            return updatedTiers;
-                          });
-                        }}
+                        onChange={(e) =>
+                          handleTimeSlotChange(
+                            index,
+                            slotIndex,
+                            "startTime",
+                            e.target.value,
+                          )
+                        } // Cleaner handler
                         className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_TimeCol_Body_Row_Input`}
                       />
                       <span
@@ -514,17 +541,14 @@ const SystemSetting = () => {
                       <input
                         type="text"
                         value={slot.endTime}
-                        onChange={(e) => {
-                          const newSlot = e.target.value;
-                          setElectricityPriceTiers((prevTiers) => {
-                            const updatedTiers = [...prevTiers];
-                            updatedTiers[index].timeSlots[slotIndex] = {
-                              ...updatedTiers[index].timeSlots[slotIndex],
-                              endTime: newSlot,
-                            };
-                            return updatedTiers;
-                          });
-                        }}
+                        onChange={(e) =>
+                          handleTimeSlotChange(
+                            index,
+                            slotIndex,
+                            "endTime",
+                            e.target.value,
+                          )
+                        } // Cleaner handler
                         className={`DAT_SystemSetting_ElectricityPriceSetting_Body_Item_TimeCol_Body_Row_Input`}
                       />
                       <button

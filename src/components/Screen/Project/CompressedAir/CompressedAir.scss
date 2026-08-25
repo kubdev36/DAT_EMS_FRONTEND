@@ -28,27 +28,58 @@
   box-sizing: border-box;
 
   // Tag nằm góc ngoài cùng bên trái
-  &_SystemTag {
+  &_TextHeader {
+    display: flex;
     position: absolute;
+    align-items: center;
+    align-self: flex-start;
+    gap: 8px;
     top: 20px;
     left: 24px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    background: rgba(245, 158, 11, 0.12);
-    border: 1px solid rgba(245, 158, 11, 0.5);
-    color: rgba(245, 158, 11, 1);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    z-index: 10;
 
-    svg {
-      width: 13px;
-      height: 13px;
-      fill: currentColor;
+    &_BackBtn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(9, 19, 38, 1);
+      border: 1px solid rgba(245, 158, 11, 0.8);
+      color: rgba(255, 255, 255, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      &:hover {
+        background: rgba(217, 119, 6, 1);
+        border-color: rgba(245, 158, 11, 1);
+      }
+    }
+
+    &_SystemTag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: rgba(245, 158, 11, 1);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      z-index: 10;
+
+      svg {
+        width: 13px;
+        height: 13px;
+        fill: currentColor;
+      }
     }
   }
 
@@ -172,7 +203,9 @@
           rgba(50, 28, 0, 0.35) 0%,
           rgba(3, 11, 26, 0.95) 100%
         );
-        box-shadow: inset 0px 0px 40px rgba(245, 158, 11, 0.08), 0px 0px 20px rgba(245, 158, 11, 0.05);
+        box-shadow:
+          inset 0px 0px 40px rgba(245, 158, 11, 0.08),
+          0px 0px 20px rgba(245, 158, 11, 0.05);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -367,7 +400,9 @@
       background-repeat: no-repeat;
       background-size: 100% 60px;
       animation: flowAirVertical 1.4s linear infinite;
-      box-shadow: 0px 0px 6px rgba(245, 158, 11, 0.8), 0px 0px 12px rgba(217, 119, 6, 0.5);
+      box-shadow:
+        0px 0px 6px rgba(245, 158, 11, 0.8),
+        0px 0px 12px rgba(217, 119, 6, 0.5);
 
       // Điểm chốt giữa nối vào trục ngang
       &::after {
@@ -420,7 +455,9 @@
             background-repeat: no-repeat;
             background-size: 80px 100%;
             animation: flowAirHorizontal 2s linear infinite;
-            box-shadow: 0px 0px 6px rgba(245, 158, 11, 0.8), 0px 0px 12px rgba(217, 119, 6, 0.5);
+            box-shadow:
+              0px 0px 6px rgba(245, 158, 11, 0.8),
+              0px 0px 12px rgba(217, 119, 6, 0.5);
           }
 
           &::before {
@@ -463,7 +500,9 @@
             background-repeat: no-repeat;
             background-size: 100% 60px;
             animation: flowAirVertical 1.4s linear infinite;
-            box-shadow: 0px 0px 6px rgba(245, 158, 11, 0.8), 0px 0px 12px rgba(217, 119, 6, 0.5);
+            box-shadow:
+              0px 0px 6px rgba(245, 158, 11, 0.8),
+              0px 0px 12px rgba(217, 119, 6, 0.5);
 
             // Điểm chốt tròn trên đường ngang
             &::before {

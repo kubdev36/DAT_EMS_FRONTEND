@@ -1,3 +1,5 @@
+@use "/src/mixins" as *;
+
 .DAT_SystemSetting {
   display: flex;
   flex-direction: column;
@@ -7,10 +9,41 @@
   margin: 0 auto;
   padding-bottom: 24px;
 
-  &_Title {
-    font-size: 36px;
-    font-weight: bold;
-    padding-bottom: 4px;
+  &_Header {
+    @include flexbox(row);
+    align-items: center;
+    gap: 16px;
+
+    &_BackBtn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(9, 19, 38, 1);
+      border: 1px solid var(--pd-text-100);
+      color: var(--pd-text-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      &:hover {
+        background: var(--pd-text-100);
+        border-color: var(--pd-text-100);
+        color: var(--pd-bg-950);
+      }
+    }
+
+    &_Title {
+      font-size: 36px;
+      font-weight: bold;
+      padding-bottom: 4px;
+    }
   }
 
   &_Messages {
@@ -44,29 +77,25 @@
         margin-bottom: 0;
       }
 
-      /* Cấu trúc bên trong của Toast message */
       .p-toast-message-content {
         display: flex;
-        align-items: center; // Canh giữa icon và nội dung theo chiều dọc
-        gap: 12px; // Tách khoảng cách giữa icon và phần nội dung text
+        align-items: center;
+        gap: 12px;
 
-        /* Icon lớn hơn và canh giữa */
         .p-toast-message-icon {
-          font-size: 1.5rem; // Làm icon to lên
+          font-size: 1.5rem;
           flex-shrink: 0;
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        /* Phần chứa text (Title + Detail) */
         .p-toast-message-text {
           margin: 0;
           display: flex;
           flex-direction: column;
           gap: 4px;
 
-          /* Title: to lên, semibold, màu --pd-text-100 */
           .p-toast-summary {
             font-size: 1rem;
             font-weight: 600; // semibold
@@ -74,7 +103,6 @@
             line-height: 1.4;
           }
 
-          /* Nội dung chi tiết: nhỏ lại, màu --pd-text-300 */
           .p-toast-detail {
             font-size: 0.875rem;
             color: var(--pd-text-300, #adb5bd);
@@ -83,7 +111,6 @@
         }
       }
 
-      /* Nút đóng (X) */
       .p-toast-icon-close {
         color: var(--pd-text-300, #adb5bd);
         width: 2rem;
@@ -95,12 +122,11 @@
         }
       }
 
-      /* --- PHÂN LOẠI MÀU SẮC THEO SEVERITY --- */
       &.p-toast-message-success {
         background: #1a2e26;
         border-color: #2b5a42;
         .p-toast-message-icon {
-          color: #22c55e; // Xanh lá sáng
+          color: #22c55e;
         }
       }
 
@@ -108,7 +134,7 @@
         background: #361b1b;
         border-color: #632c2c;
         .p-toast-message-icon {
-          color: #ef4444; // Đỏ sáng
+          color: #ef4444;
         }
       }
 
@@ -116,7 +142,7 @@
         background: #362d1a;
         border-color: #635029;
         .p-toast-message-icon {
-          color: #f59e0b; // Vàng/Cam sáng
+          color: #f59e0b;
         }
       }
 
@@ -124,7 +150,7 @@
         background: #1b263b;
         border-color: #2d436e;
         .p-toast-message-icon {
-          color: #38bdf8; // Xanh dương sáng
+          color: #38bdf8;
         }
       }
     }

@@ -14,9 +14,12 @@ import { useState } from "react";
 import EnergyTimeChart from "./EnergyTimeChart";
 import EnergyConsumption from "./EnergyConsumption";
 import EnergyStructure from "./EnergyStructure";
+import { LuChevronLeft } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const lang = useIntl();
+  const navigate = useNavigate();
   const [metricData, setMetricData] = useState({
     electric: {
       power: 54.0,
@@ -35,9 +38,16 @@ export default function Dashboard() {
     },
     totalCo2: 831.0,
   });
+
   return (
     <section className="DAT_DashBoard">
       <div className="DAT_DashBoard_TextHeader">
+        <button
+          className="DAT_DashBoard_TextHeader_BackBtn"
+          onClick={() => navigate("/projectmanagement")}
+        >
+          <LuChevronLeft />
+        </button>
         <div className="DAT_DashBoard_TextHeader_Name">
           {lang.formatMessage({ id: "dashboard_title" })}
         </div>
