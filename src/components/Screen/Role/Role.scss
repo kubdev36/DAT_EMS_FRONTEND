@@ -1,8 +1,91 @@
-.DAT_UserManagement {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-base);
-  animation: userManagementFadeIn 0.3s ease-out;
+.DAT_RoleSetting {
+  &_HeaderCard {
+    padding: var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_Main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &_Icon {
+        display: flex;
+        align-items: center;
+        color: var(--text-primary);
+      }
+
+      &_Title {
+        grid-area: title;
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 24px;
+        font-weight: var(--font-weight-semibold);
+      }
+
+    }
+
+    &_Actions {
+      grid-area: actions;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+
+      &_ResetButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all var(--transition-base);
+
+        background: var(--gray-100);
+        border-color: var(--gray-100);
+        color: var(--text-body);
+
+        &:hover {
+          background: var(--gray-200);
+          border-color: var(--gray-200);
+        }
+      }
+
+      &_SaveButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all var(--transition-base);
+        background: var(--primary);
+        color: rgba(255, 255, 255, 1);
+
+        &:hover {
+          background: var(--primary-hover);
+          box-shadow: 0 4px 12px rgba(11, 25, 103, 0.22);
+        }
+      }
+    }
+  }
 
   &_Card {
     padding: var(--space-lg);
@@ -44,7 +127,7 @@
 
       &_FilterInput,
       &_FilterSelect {
-        width: 100%;
+        width: 200px !important;
         height: 42px;
         border: 1px solid var(--border);
         border-radius: var(--radius-md);
@@ -119,6 +202,7 @@
     background: var(--card-bg);
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--transition-base);
+    margin-top: 10px;
 
     &_Table {
       overflow-x: auto;
@@ -134,7 +218,7 @@
           border-bottom: 1px solid var(--border-light);
           background: var(--bg-hover);
           color: var(--text-secondary);
-          text-align: left;
+          text-align: center;
           white-space: nowrap;
           font-size: var(--font-size-sm);
           font-weight: var(--font-weight-semibold);
@@ -144,6 +228,7 @@
 
         &_Row {
           transition: background var(--transition-fast);
+          text-align: center;
 
           &:hover {
             background: var(--bg-hover);
@@ -165,59 +250,84 @@
             vertical-align: middle;
           }
 
-          &--locked {
+          &--Inactive {
             color: var(--danger);
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-light);
             font-size: var(--font-size-base);
             vertical-align: middle;
           }
+
+          &_Action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            &_Button {
+              padding: 6px 10px;
+              background-color: transparent;
+              border-radius: var(--radius-md);
+              border: 1px solid transparent;
+              border-color: var(--border);
+              color: var(--primary);
+
+              &:hover {
+                border-color: var(--primary);
+                background: var(--primary-light);
+              }
+            }
+          }
         }
       }
+    }
 
-      &_Actions {
-        display: flex;
-        gap: var(--space-sm);
-        position: relative;
+    &_Pagination {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-family: sans-serif;
+      justify-content: center;
+      margin-top: 10px;
+
+      &_Btn {
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        color: rgba(51, 51, 51, 1);
+        background-color: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(224, 224, 224, 1);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        outline: none;
 
-        &_Button_GhostSm,
-        &_Button_SecondarySm {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--space-sm);
-          padding: 6px 12px;
-          border: 1px solid transparent;
-          border-radius: var(--radius-md);
-          font-size: var(--font-size-sm);
-          font-weight: var(--font-weight-medium);
-          line-height: 1.4;
-          white-space: nowrap;
-          transition: all var(--transition-base);
+        &:hover:not(&--active):not(:disabled) {
+          background-color: rgba(245, 245, 245, 1);
+          border-color: rgba(204, 204, 204, 1);
         }
 
-        &_Button_GhostSm {
-          background: transparent;
-          border-color: var(--border);
-          color: var(--primary);
-
-
-          &:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-          }
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          background-color: rgba(250, 250, 250, 1);
         }
 
-        &_Button_SecondarySm {
-          background: var(--gray-100);
-          border-color: var(--gray-100);
-          color: var(--text-body);
+        &--active {
+          background-color: rgba(13, 27, 102, 1);
+          border-color: rgba(13, 27, 102, 1);
+          color: rgba(255, 255, 255, 1);
+          font-weight: bold;
+          cursor: default;
+        }
 
-          &:hover {
-            background: var(--gray-200);
-            border-color: var(--gray-200);
-          }
+        &--prev,
+        &--next {
+          color: rgba(160, 160, 160, 1);
+          font-size: 12px;
         }
       }
     }
@@ -270,7 +380,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
 
     &_Container {
       background-color: var(--card-bg);
@@ -282,7 +391,6 @@
       overflow: hidden;
       position: relative;
       width: 400px;
-      top: 50px;
 
       &_Header {
 
@@ -327,64 +435,16 @@
 
       &_Main {
         align-items: center;
+        border-bottom: 1px solid rgba(198, 197, 197, 0.5);
         font-size: 14px;
         justify-content: center;
+        padding: 16px;
         background-color: var(--card-bg);
 
-        &_Otp {
-          display: flex;
-          justify-content: space-around;
-          padding-left: 10px;
-          padding-right: 10px;
-          margin-top: 5px;
-
-          &_Input {
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid rgba(198, 197, 197, 0.5);
-            box-sizing: border-box;
-
-            text-align: center;
-            color: black;
-            font-size: 20px;
-          }
-        }
-
-        &_Form {
-          display: flex;
-          justify-content: space-between;
-
-          &_Item {
-            margin-top: 14px;
-            flex-direction: column;
-            display: flex;
-
-            &_Label {
-              cursor: default;
-              color: var(--gray-900);
-              margin-bottom: 8px;
-            }
-
-            &_Select {
-              width: 135px;
-              height: 30px;
-              padding: 0 32px 0 14px;
-              appearance: none;
-              border: 1px solid rgba(198, 197, 197, 0.5);
-              cursor: pointer;
-              border-radius: 5px;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-              background-repeat: no-repeat;
-              background-position: right 12px center;
-            }
-          }
-        }
 
         &_Label {
           cursor: default;
-          color: var(--gray-900);
-          margin-bottom: 8px;
+          color: var(--card-bg);
         }
 
         &_Box {
@@ -395,7 +455,6 @@
           gap: 8px;
           justify-content: center;
           width: 100%;
-          margin-bottom: 8px;
 
           input {
             border: none;
@@ -416,25 +475,16 @@
           }
         }
 
-        &_Error {
-          padding: 10px 12px;
-          border-radius: 8px;
-          background: rgba(180, 33, 33, 0.32);
-          color: rgba(255, 255, 255, 1);
-          font-size: 15.2px;
+        input {
+          border-radius: 5px;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          height: 30px;
+          outline: none;
+          padding: 8px;
+          width: 100%;
         }
-
-        &_Resend {
-          margin-top: 5px;
-
-          &_Active {
-            color: var(--primary);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-          }
-        }
-
-
       }
 
       &_Foot {
@@ -467,35 +517,6 @@
           cursor: pointer;
           padding: 8px 16px;
           margin-left: 6px;
-        }
-
-        &_Button_Primary,
-        &_Button_Secondary,
-        &_Button_Ghost,
-        &_Button_GhostSm,
-        &_Button_SecondarySm {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--space-sm);
-          padding: 10px 20px;
-          border: 1px solid transparent;
-          border-radius: var(--radius-md);
-          font-size: var(--font-size-base);
-          font-weight: var(--font-weight-medium);
-          line-height: 1.4;
-          white-space: nowrap;
-          transition: all var(--transition-base);
-        }
-
-        &_Button_Primary {
-          background: var(--primary);
-          color: rgba(255, 255, 255, 1);
-
-          &:hover {
-            background: var(--primary-hover);
-            box-shadow: 0 4px 12px rgba(11, 25, 103, 0.22);
-          }
         }
       }
     }
@@ -550,52 +571,5 @@
         }
       }
     }
-  }
-
-  &_Pop {
-
-    &_MenuItem {
-      padding: 10px 16px;
-      font-size: var(--font-size-base);
-      color: var(--text-body);
-      cursor: pointer;
-      transition: background var(--transition-fast);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      &:hover {
-        background: var(--gray-100);
-      }
-
-    }
-
-    &_Menu {
-      position: absolute;
-      top: -45px;
-      right: 50px;
-      margin-top: 6px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      min-width: 100px;
-      z-index: var(--z-dropdown);
-      animation: pop 0.2s ease;
-    }
-
-    &_MenuLast {
-      position: absolute;
-      right: 50px;
-      top: -50px;
-      margin-top: 6px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      min-width: 100px;
-      z-index: var(--z-dropdown);
-    }
-
   }
 }

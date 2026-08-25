@@ -8,10 +8,40 @@
   gap: 16px;
 
   &_TextHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
     font-size: 16px;
     font-weight: 700;
     line-height: 25px;
     color: rgb(255, 255, 255);
+
+    &_BackBtn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(9, 19, 38, 1);
+      border: 1px solid var(--pd-text-100);
+      color: var(--pd-text-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      &:hover {
+        background: var(--pd-text-100);
+        border-color: var(--pd-text-100);
+        color: var(--pd-bg-950);
+      }
+    }
+
     &_Name {
       color: var(--pd-text-white);
       font-size: 36px;

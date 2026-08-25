@@ -1,8 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss';
-import App from './App';
-import { LanguageProvider } from './components/Lang/LanguageProvider'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.scss";
+import App from "./App";
+import { LanguageProvider } from "./components/Lang/LanguageProvider";
+import { SystemContextProvider } from "./components/contexts/SystemContext";
+import { RackContextProvider } from "./components/contexts/RackContext";
 
 // if ("serviceWorker" in navigator) {
 //   navigator.serviceWorker
@@ -13,12 +15,15 @@ import { LanguageProvider } from './components/Lang/LanguageProvider'
 //     .catch(console.error);
 // }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
-
-  </React.StrictMode>
+    <SystemContextProvider>
+      <RackContextProvider>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </RackContextProvider>
+    </SystemContextProvider>
+  </React.StrictMode>,
 );
